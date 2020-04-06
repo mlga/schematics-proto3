@@ -32,4 +32,5 @@ class PylintCommand(distutils.cmd.Command):
         try:
             subprocess.check_call(command)
         except subprocess.CalledProcessError as ex:
-            sys.exit(ex.returncode)
+            retcode = ex.returncode ^ 4
+            sys.exit(retcode)
