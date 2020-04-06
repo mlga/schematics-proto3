@@ -1,11 +1,10 @@
 # -*- coding:utf-8 -*-
-from typing import Type, Iterable
+from typing import Iterable
 
 import schematics
 from google.protobuf import wrappers_pb2
 from google.protobuf.message import Message
 from schematics.types import ModelType, ListType
-from schematics.undefined import Undefined
 
 from schematics_proto3.types import ProtobufWrapperMixin
 from schematics_proto3.unset import Unset
@@ -51,6 +50,7 @@ def get_value(msg, field_name, field_names):
 
 
 class Model(schematics.Model):
+    # pylint: disable=no-member
 
     def __init__(self, *args, **kwargs):
         # TODO: Drop this when todo below is done.

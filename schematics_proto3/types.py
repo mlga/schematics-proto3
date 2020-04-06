@@ -4,8 +4,8 @@ import random
 
 from schematics.common import NOT_NONE
 from schematics.exceptions import ConversionError, ValidationError
-from schematics.types import BaseType, FloatType, BooleanType, StringType, IntType, ModelType as SchModelType, ListType, \
-    PolyModelType
+from schematics.types import BaseType, FloatType, BooleanType, StringType, IntType, \
+    ModelType as SchModelType, ListType
 from schematics.undefined import Undefined
 
 from schematics_proto3.unset import Unset
@@ -76,7 +76,7 @@ class ProtobufWrapperMixin:
 
         return super().convert(value, context)
 
-    def export(self, value, format, context):
+    def export(self, value, format, context):  # pylint:disable=redefined-builtin
         if value is Unset:
             export_level = self.get_export_level(context)
 
@@ -138,7 +138,8 @@ class ModelType(ProtobufWrapperMixin, SchModelType):
     def convert(self, value, context):
         # TODO: If instance does not match protobuf msg type but is a
         #       protobuf msg nerveless, raise informative exception.
-        if isinstance(value,  self.model_class._options.extras['_protobuf_class']):
+        # pylint: disable=protected-access
+        if isinstance(value, self.model_class._options.extras['_protobuf_class']):
             return self.model_class.load_protobuf(value)
 
         return super().convert(value, context)
