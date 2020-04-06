@@ -1,0 +1,37 @@
+name: Build
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.6, 3.7, 3.8]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install package
+      run: |
+        pip install .[develop]
+#    - name: Lint with pycodestyle
+#      run: |
+#        pycodestyle --config setup.cfg bank_merge
+    - name: Lint with pylint
+      run: |
+        python setup.py pylint
+    - name: Test
+      run: |
+        python setup.py pytest
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: ./coverage.xml
+        fail_ci_if_error: true
