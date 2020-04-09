@@ -61,6 +61,8 @@ class Model(schematics.Model):
 
     @classmethod
     def load_protobuf(cls, msg):
+        # pylint: disable=too-many-branches
+        # TODO: Refactor this method and remove above comment.
         assert issubclass(cls, schematics.Model)
 
         field_names = {descriptor.name for descriptor, _ in msg.ListFields()}
@@ -93,7 +95,12 @@ class Model(schematics.Model):
                     values[name] = Unset
                 else:
                     field.variant = variant_name
-                    values[name] = get_value(msg, variant_name, field_names)
+                    if isinstance(field.variant_type, ModelType):
+                        # TODO: Catch AttributeError and raise proper exception.
+                        value = getattr(msg, variant_name)
+                        values[name] = field.variant_type.model_class.load_protobuf(value)
+                    else:
+                        values[name] = get_value(msg, variant_name, field_names)
             else:
                 values[name] = get_value(msg, pb_name, field_names)
 
