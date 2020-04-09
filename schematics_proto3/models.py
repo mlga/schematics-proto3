@@ -6,7 +6,7 @@ from google.protobuf import wrappers_pb2
 from google.protobuf.message import Message
 from schematics.types import ModelType, ListType
 
-from schematics_proto3.types import ProtobufWrapperMixin
+from schematics_proto3.types import ProtobufWrapperMixin, OneOfType
 from schematics_proto3.unset import Unset
 
 PRIMITIVE_TYPES = (str, int, float, bool, bytes)
@@ -84,6 +84,16 @@ class Model(schematics.Model):
                     values[name] = get_value(msg, pb_name, field_names)
                 else:
                     values[name] = get_value(msg, pb_name, field_names)
+            elif isinstance(field, OneOfType):
+                # TODO: Handle value error:
+                #       ValueError: Protocol message has no oneof "X" field.
+                variant_name = msg.WhichOneof(pb_name)
+
+                if variant_name is None:
+                    values[name] = Unset
+                else:
+                    field.variant = variant_name
+                    values[name] = get_value(msg, variant_name, field_names)
             else:
                 values[name] = get_value(msg, pb_name, field_names)
 

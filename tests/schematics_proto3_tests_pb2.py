@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='schematics_proto3.tests',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n#tests/schematics_proto3_tests.proto\x12\x17schematics_proto3.tests\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\"e\n\x06Nested\x12\x34\n\x05inner\x18\x01 \x01(\x0b\x32%.schematics_proto3.tests.Nested.Inner\x12\r\n\x05other\x18\x02 \x01(\t\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\t\">\n\rWrappedDouble\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\"<\n\x0cWrappedFloat\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.FloatValue\"<\n\x0cWrappedInt64\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\">\n\rWrappedUInt64\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt64Value\"<\n\x0cWrappedInt32\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\">\n\rWrappedUInt32\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\":\n\x0bWrappedBool\x12+\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\">\n\rWrappedString\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"<\n\x0cWrappedBytes\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.BytesValue\"\x17\n\x06\x44ouble\x12\r\n\x05value\x18\x01 \x01(\x01\"\x16\n\x05\x46loat\x12\r\n\x05value\x18\x01 \x01(\x02\"\x16\n\x05Int64\x12\r\n\x05value\x18\x01 \x01(\x03\"\x17\n\x06UInt64\x12\r\n\x05value\x18\x01 \x01(\x04\"\x16\n\x05Int32\x12\r\n\x05value\x18\x01 \x01(\x05\"\x17\n\x06UInt32\x12\r\n\x05value\x18\x01 \x01(\r\"\x15\n\x04\x42ool\x12\r\n\x05value\x18\x01 \x01(\x08\"\x17\n\x06String\x12\r\n\x05value\x18\x01 \x01(\t\"\x16\n\x05\x42ytes\x12\r\n\x05value\x18\x01 \x01(\x0c\"\"\n\x11RepeatedPrimitive\x12\r\n\x05value\x18\x01 \x03(\t\"f\n\x0eRepeatedNested\x12<\n\x05inner\x18\x01 \x03(\x0b\x32-.schematics_proto3.tests.RepeatedNested.Inner\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n#tests/schematics_proto3_tests.proto\x12\x17schematics_proto3.tests\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\"e\n\x06Nested\x12\x34\n\x05inner\x18\x01 \x01(\x0b\x32%.schematics_proto3.tests.Nested.Inner\x12\r\n\x05other\x18\x02 \x01(\t\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\t\">\n\rWrappedDouble\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\"<\n\x0cWrappedFloat\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.FloatValue\"<\n\x0cWrappedInt64\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\">\n\rWrappedUInt64\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt64Value\"<\n\x0cWrappedInt32\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\">\n\rWrappedUInt32\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\":\n\x0bWrappedBool\x12+\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\">\n\rWrappedString\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"<\n\x0cWrappedBytes\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.BytesValue\"\x17\n\x06\x44ouble\x12\r\n\x05value\x18\x01 \x01(\x01\"\x16\n\x05\x46loat\x12\r\n\x05value\x18\x01 \x01(\x02\"\x16\n\x05Int64\x12\r\n\x05value\x18\x01 \x01(\x03\"\x17\n\x06UInt64\x12\r\n\x05value\x18\x01 \x01(\x04\"\x16\n\x05Int32\x12\r\n\x05value\x18\x01 \x01(\x05\"\x17\n\x06UInt32\x12\r\n\x05value\x18\x01 \x01(\r\"\x15\n\x04\x42ool\x12\r\n\x05value\x18\x01 \x01(\x08\"\x17\n\x06String\x12\r\n\x05value\x18\x01 \x01(\t\"\x16\n\x05\x42ytes\x12\r\n\x05value\x18\x01 \x01(\x0c\"\"\n\x11RepeatedPrimitive\x12\r\n\x05value\x18\x01 \x03(\t\"f\n\x0eRepeatedNested\x12<\n\x05inner\x18\x01 \x03(\x0b\x32-.schematics_proto3.tests.RepeatedNested.Inner\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\t\"=\n\x0eOneOfPrimitive\x12\x10\n\x06value1\x18\x01 \x01(\x04H\x00\x12\x10\n\x06value2\x18\x02 \x01(\tH\x00\x42\x07\n\x05inner\"\x9c\x01\n\x0bOneOfNested\x12<\n\x06value1\x18\x01 \x01(\x0b\x32*.schematics_proto3.tests.OneOfNested.InnerH\x00\x12.\n\x06value2\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValueH\x00\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\tB\x07\n\x05innerb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -746,6 +746,118 @@ _REPEATEDNESTED = _descriptor.Descriptor(
   serialized_end=1153,
 )
 
+
+_ONEOFPRIMITIVE = _descriptor.Descriptor(
+  name='OneOfPrimitive',
+  full_name='schematics_proto3.tests.OneOfPrimitive',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='value1', full_name='schematics_proto3.tests.OneOfPrimitive.value1', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value2', full_name='schematics_proto3.tests.OneOfPrimitive.value2', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='inner', full_name='schematics_proto3.tests.OneOfPrimitive.inner',
+      index=0, containing_type=None, fields=[]),
+  ],
+  serialized_start=1155,
+  serialized_end=1216,
+)
+
+
+_ONEOFNESTED_INNER = _descriptor.Descriptor(
+  name='Inner',
+  full_name='schematics_proto3.tests.OneOfNested.Inner',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='value', full_name='schematics_proto3.tests.OneOfNested.Inner.value', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=208,
+  serialized_end=230,
+)
+
+_ONEOFNESTED = _descriptor.Descriptor(
+  name='OneOfNested',
+  full_name='schematics_proto3.tests.OneOfNested',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='value1', full_name='schematics_proto3.tests.OneOfNested.value1', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value2', full_name='schematics_proto3.tests.OneOfNested.value2', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_ONEOFNESTED_INNER, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='inner', full_name='schematics_proto3.tests.OneOfNested.inner',
+      index=0, containing_type=None, fields=[]),
+  ],
+  serialized_start=1219,
+  serialized_end=1375,
+)
+
 _NESTED_INNER.containing_type = _NESTED
 _NESTED.fields_by_name['inner'].message_type = _NESTED_INNER
 _WRAPPEDDOUBLE.fields_by_name['wrapped'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
@@ -759,6 +871,21 @@ _WRAPPEDSTRING.fields_by_name['wrapped'].message_type = google_dot_protobuf_dot_
 _WRAPPEDBYTES.fields_by_name['wrapped'].message_type = google_dot_protobuf_dot_wrappers__pb2._BYTESVALUE
 _REPEATEDNESTED_INNER.containing_type = _REPEATEDNESTED
 _REPEATEDNESTED.fields_by_name['inner'].message_type = _REPEATEDNESTED_INNER
+_ONEOFPRIMITIVE.oneofs_by_name['inner'].fields.append(
+  _ONEOFPRIMITIVE.fields_by_name['value1'])
+_ONEOFPRIMITIVE.fields_by_name['value1'].containing_oneof = _ONEOFPRIMITIVE.oneofs_by_name['inner']
+_ONEOFPRIMITIVE.oneofs_by_name['inner'].fields.append(
+  _ONEOFPRIMITIVE.fields_by_name['value2'])
+_ONEOFPRIMITIVE.fields_by_name['value2'].containing_oneof = _ONEOFPRIMITIVE.oneofs_by_name['inner']
+_ONEOFNESTED_INNER.containing_type = _ONEOFNESTED
+_ONEOFNESTED.fields_by_name['value1'].message_type = _ONEOFNESTED_INNER
+_ONEOFNESTED.fields_by_name['value2'].message_type = google_dot_protobuf_dot_wrappers__pb2._STRINGVALUE
+_ONEOFNESTED.oneofs_by_name['inner'].fields.append(
+  _ONEOFNESTED.fields_by_name['value1'])
+_ONEOFNESTED.fields_by_name['value1'].containing_oneof = _ONEOFNESTED.oneofs_by_name['inner']
+_ONEOFNESTED.oneofs_by_name['inner'].fields.append(
+  _ONEOFNESTED.fields_by_name['value2'])
+_ONEOFNESTED.fields_by_name['value2'].containing_oneof = _ONEOFNESTED.oneofs_by_name['inner']
 DESCRIPTOR.message_types_by_name['Nested'] = _NESTED
 DESCRIPTOR.message_types_by_name['WrappedDouble'] = _WRAPPEDDOUBLE
 DESCRIPTOR.message_types_by_name['WrappedFloat'] = _WRAPPEDFLOAT
@@ -780,6 +907,8 @@ DESCRIPTOR.message_types_by_name['String'] = _STRING
 DESCRIPTOR.message_types_by_name['Bytes'] = _BYTES
 DESCRIPTOR.message_types_by_name['RepeatedPrimitive'] = _REPEATEDPRIMITIVE
 DESCRIPTOR.message_types_by_name['RepeatedNested'] = _REPEATEDNESTED
+DESCRIPTOR.message_types_by_name['OneOfPrimitive'] = _ONEOFPRIMITIVE
+DESCRIPTOR.message_types_by_name['OneOfNested'] = _ONEOFNESTED
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Nested = _reflection.GeneratedProtocolMessageType('Nested', (_message.Message,), dict(
@@ -944,6 +1073,28 @@ RepeatedNested = _reflection.GeneratedProtocolMessageType('RepeatedNested', (_me
   ))
 _sym_db.RegisterMessage(RepeatedNested)
 _sym_db.RegisterMessage(RepeatedNested.Inner)
+
+OneOfPrimitive = _reflection.GeneratedProtocolMessageType('OneOfPrimitive', (_message.Message,), dict(
+  DESCRIPTOR = _ONEOFPRIMITIVE,
+  __module__ = 'tests.schematics_proto3_tests_pb2'
+  # @@protoc_insertion_point(class_scope:schematics_proto3.tests.OneOfPrimitive)
+  ))
+_sym_db.RegisterMessage(OneOfPrimitive)
+
+OneOfNested = _reflection.GeneratedProtocolMessageType('OneOfNested', (_message.Message,), dict(
+
+  Inner = _reflection.GeneratedProtocolMessageType('Inner', (_message.Message,), dict(
+    DESCRIPTOR = _ONEOFNESTED_INNER,
+    __module__ = 'tests.schematics_proto3_tests_pb2'
+    # @@protoc_insertion_point(class_scope:schematics_proto3.tests.OneOfNested.Inner)
+    ))
+  ,
+  DESCRIPTOR = _ONEOFNESTED,
+  __module__ = 'tests.schematics_proto3_tests_pb2'
+  # @@protoc_insertion_point(class_scope:schematics_proto3.tests.OneOfNested)
+  ))
+_sym_db.RegisterMessage(OneOfNested)
+_sym_db.RegisterMessage(OneOfNested.Inner)
 
 
 # @@protoc_insertion_point(module_scope)
