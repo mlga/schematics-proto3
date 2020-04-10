@@ -3,7 +3,7 @@ import os
 import random
 
 from schematics.common import NOT_NONE
-from schematics.exceptions import ConversionError, ValidationError, CompoundError, StopValidationError
+from schematics.exceptions import ConversionError, ValidationError, CompoundError, StopValidationError, DataError
 from schematics.types import BaseType, FloatType, BooleanType, StringType, IntType, \
     ModelType as SchModelType, ListType, CompoundType
 from schematics.undefined import Undefined
@@ -144,6 +144,9 @@ class OneOfVariant:
 
         return self.variant == other.variant and self.value == other.value
 
+    def __repr__(self):
+        return f'OneOfVariant<{self.variant}, {self.value}>'
+
 
 class OneOfType(ProtobufWrapperMixin, CompoundType):
 
@@ -234,7 +237,7 @@ class OneOfType(ProtobufWrapperMixin, CompoundType):
         # Run validation of inner variant field.
         try:
             self.variant_type.validate(value.value, context)
-        except ValidationError as ex:
+        except (ValidationError, DataError) as ex:
             raise CompoundError({
                 self.variant: ex,
             })
@@ -265,7 +268,7 @@ class OneOfType(ProtobufWrapperMixin, CompoundType):
 
         return {
             'variant': value.variant,
-            'value': value.value,
+            'value': self.variant_type.export(value.value, format, context),
         }
 
     # Those methods are abstract in CompoundType class, override them to
