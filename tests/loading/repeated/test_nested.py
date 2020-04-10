@@ -79,6 +79,30 @@ def model_class_required():
 
 
 @pytest.fixture
+def model_class_required_renamed():
+    class ModelRequired(Model):
+        class InnerMsgModel(Model):
+            custom_value = types.StringType(
+                required=True,
+                metadata=dict(protobuf_field='value'),
+            )
+
+            class Options:
+                _protobuf_class = pb2.Nested.Inner
+
+        custom_inner = types.RepeatedType(
+            types.ModelType(InnerMsgModel),
+            required=True,
+            metadata=dict(protobuf_field='inner'),
+        )
+
+        class Options:
+            _protobuf_class = pb2.RepeatedNested
+
+    return ModelRequired
+
+
+@pytest.fixture
 def model_class_none_not_dumped():
 
     class ModelNoneNotDumped(Model):
@@ -137,6 +161,37 @@ def model_class_validated_factory():
             inner = types.RepeatedType(
                 types.ModelType(InnerMsgModel),
                 validators=outer_validators,
+            )
+
+            class Options:
+                _protobuf_class = pb2.RepeatedNested
+
+        return ModelValidated
+
+    return _factory
+
+
+@pytest.fixture
+def model_class_validated_renamed_factory():
+    def _factory(validator_func=None, inner_validator_func=None):
+        outer_validators = [validator_func] if validator_func else []
+        inner_validators = [inner_validator_func] if inner_validator_func else []
+
+        class ModelValidated(Model):
+
+            class InnerMsgModel(Model):
+                custom_value = types.StringType(
+                    validators=inner_validators,
+                    metadata=dict(protobuf_field='value'),
+                )
+
+                class Options:
+                    _protobuf_class = pb2.RepeatedNested.Inner
+
+            custom_inner = types.RepeatedType(
+                types.ModelType(InnerMsgModel),
+                validators=outer_validators,
+                metadata=dict(protobuf_field='inner'),
             )
 
             class Options:
@@ -238,6 +293,15 @@ def test_required_unsets(model_class_required, msg_unsets):
     errors = ex.value.to_primitive()
     assert 'inner' in errors
     assert 'required' in errors['inner'][0]
+
+
+def test_required__renamed_unsets(model_class_required_renamed, msg_unsets):
+    with pytest.raises(DataError) as ex:
+        model_class_required_renamed.load_protobuf(msg_unsets)
+
+    errors = ex.value.to_primitive()
+    assert 'custom_inner' in errors
+    assert 'required' in errors['custom_inner'][0]
 
 
 def test_renamed_all_set(model_class_field_renamed, msg_all_set):
@@ -358,3 +422,36 @@ def test_validated_validation_error__inner(model_class_validated_factory, msg_al
     assert 'Please speak up!' in errors['inner'][1]['value']
     assert 'Please speak up!' in errors['inner'][2]['value']
     assert validator_func.call_count == 3
+
+
+def test_validated_validation_renamed_error(model_class_validated_renamed_factory, msg_all_set):
+    validator_func = Mock(side_effect=ValidationError('Please speak up!'))
+    model_cls = model_class_validated_renamed_factory(validator_func)
+
+    model = model_cls.load_protobuf(msg_all_set)
+    with pytest.raises(DataError) as ex:
+        model.validate()
+
+    errors = ex.value.to_primitive()
+
+    assert 'custom_inner' in errors
+    assert 'Please speak up!' in errors['custom_inner'][0], f"`Please speak up!` in `{errors['custom_inner'][0]}`"
+    validator_func.assert_called_once()
+
+
+def test_validated_validation_renamed_error__inner(model_class_validated_renamed_factory, msg_all_set):
+    validator_func = Mock(side_effect=ValidationError('Please speak up!'))
+    model_cls = model_class_validated_renamed_factory(None, validator_func)
+
+    model = model_cls.load_protobuf(msg_all_set)
+    with pytest.raises(DataError) as ex:
+        model.validate()
+
+    errors = ex.value.to_primitive()
+
+    assert 'custom_inner' in errors
+    assert 'Please speak up!' in errors['custom_inner'][0]['custom_value']
+    assert 'Please speak up!' in errors['custom_inner'][1]['custom_value']
+    assert 'Please speak up!' in errors['custom_inner'][2]['custom_value']
+    assert validator_func.call_count == 3
+

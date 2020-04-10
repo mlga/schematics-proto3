@@ -49,6 +49,19 @@ def construct_model_class_field_renamed(field_type_cls, protobuf_msg_cls):
     return ModelFieldRenamed
 
 
+def construct_model_class_field_renamed_required(field_type_cls, protobuf_msg_cls):
+    class ModelFieldRenamedRequired(Model):
+        custom_name = field_type_cls(
+            metadata=dict(protobuf_field='wrapped'),
+            required=True,
+        )
+
+        class Options:
+            _protobuf_class = protobuf_msg_cls
+
+    return ModelFieldRenamedRequired
+
+
 def construct_model_class_validated(
         field_type_cls,
         protobuf_msg_cls,
@@ -63,10 +76,44 @@ def construct_model_class_validated(
     return ModelValidated
 
 
+def construct_model_class_field_renamed_validated(
+        field_type_cls,
+        protobuf_msg_cls,
+        validator_func,
+):
+    class ModelValidated(Model):
+        custom_name = field_type_cls(
+            metadata=dict(protobuf_field='wrapped'),
+            validators=[validator_func],
+        )
+
+        class Options:
+            _protobuf_class = protobuf_msg_cls
+
+    return ModelValidated
+
+
 class CommonWrappersTests:
 
     field_type_class = NotImplemented
     protobuf_msg_class = NotImplemented
+
+
+    def pytest_generate_tests(self, metafunc):
+        param_rule = getattr(metafunc.function, '_paramertize_for', None)
+
+        if param_rule == 'all validation cases':
+            metafunc.parametrize(
+                'field_name,model_factory',
+                [
+                    ('value', self.get_model_class_validated),
+                    ('custom_name', self.get_model_class_renamed_validated),
+                ],
+                ids=[
+                    'optional',
+                    'renamed',
+                ]
+            )
 
     def get_model_class_optional(self):
         if (self.field_type_class is NotImplemented
@@ -112,6 +159,17 @@ class CommonWrappersTests:
             self.protobuf_msg_class,
         )
 
+    def get_model_class_renamed_required(self):
+        if (self.field_type_class is NotImplemented
+                or self.protobuf_msg_class is NotImplemented
+        ):
+            raise NotImplementedError()
+
+        return construct_model_class_field_renamed_required(
+            self.field_type_class,
+            self.protobuf_msg_class,
+        )
+
     def get_model_class_validated(self, validator_func):
         if (self.field_type_class is NotImplemented
                 or self.protobuf_msg_class is NotImplemented
@@ -119,6 +177,18 @@ class CommonWrappersTests:
             raise NotImplementedError()
 
         return construct_model_class_validated(
+            self.field_type_class,
+            self.protobuf_msg_class,
+            validator_func,
+        )
+
+    def get_model_class_renamed_validated(self, validator_func):
+        if (self.field_type_class is NotImplemented
+                or self.protobuf_msg_class is NotImplemented
+        ):
+            raise NotImplementedError()
+
+        return construct_model_class_field_renamed_validated(
             self.field_type_class,
             self.protobuf_msg_class,
             validator_func,
@@ -220,6 +290,17 @@ class CommonWrappersTests:
         assert 'wrapped' in errors
         assert 'required' in errors['wrapped'][0], f"`wrapped` in `{errors['wrapped'][0]}`"
 
+    def test_required_renamed_unsets(self):
+        model_cls = self.get_model_class_renamed_required()
+        msg = self.get_msg_unsets()
+
+        with pytest.raises(DataError) as ex:
+            model_cls.load_protobuf(msg)
+
+        errors = ex.value.to_primitive()
+        assert 'custom_name' in errors
+        assert 'required' in errors['custom_name'][0], f"`custom_name` in `{errors['custom_name'][0]}`"
+
     def test_renamed_all_set(self):
         model_cls = self.get_model_class_renamed()
         msg = self.get_msg_all_set()
@@ -312,3 +393,16 @@ class CommonWrappersTests:
         errors = ex.value.to_primitive()
         assert 'wrapped' in errors
         assert 'Please speak up!' in errors['wrapped'][0], f"`Please speak up!` in `{errors['wrapped'][0]}`"
+
+    def test_validated_validation_error_renamed(self):
+        validator_func = Mock(side_effect=ValidationError('Please speak up!'))
+        model_cls = self.get_model_class_renamed_validated(validator_func)
+        msg = self.get_msg_all_set()
+
+        model = model_cls.load_protobuf(msg)
+        with pytest.raises(DataError) as ex:
+            model.validate()
+
+        errors = ex.value.to_primitive()
+        assert 'custom_name' in errors
+        assert 'Please speak up!' in errors['custom_name'][0], f"`Please speak up!` in `{errors['custom_name'][0]}`"

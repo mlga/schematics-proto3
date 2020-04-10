@@ -103,6 +103,25 @@ def model_class_field_renamed():
 
 
 @pytest.fixture
+def model_class_field_renamed_required():
+
+    class ModelFieldRenamedRequired(Model):
+        custom_inner = types.OneOfType(
+            variants_spec={
+                'value1': types.IntType(),
+                'custom_value2': types.StringType(metadata=dict(protobuf_field='value2')),
+            },
+            metadata=dict(protobuf_field='inner'),
+            required=True,
+        )
+
+        class Options:
+            _protobuf_class = pb2.OneOfPrimitive
+
+    return ModelFieldRenamedRequired
+
+
+@pytest.fixture
 def model_class_validated_factory():
     def _factory(validator_func=None, inner_validator_func=None):
         outer_validators = [validator_func] if validator_func else []
@@ -115,6 +134,33 @@ def model_class_validated_factory():
                     'value2': types.StringType(validators=inner_validators),
                 },
                 validators=outer_validators,
+            )
+
+            class Options:
+                _protobuf_class = pb2.OneOfPrimitive
+
+        return ModelValidated
+
+    return _factory
+
+
+@pytest.fixture
+def model_class_validated_renamed_factory():
+    def _factory(validator_func=None, inner_validator_func=None):
+        outer_validators = [validator_func] if validator_func else []
+        inner_validators = [inner_validator_func] if inner_validator_func else []
+
+        class ModelValidated(Model):
+            custom_inner = types.OneOfType(
+                variants_spec={
+                    'value1': types.IntType(),
+                    'custom_value2': types.StringType(
+                        validators=inner_validators,
+                        metadata=dict(protobuf_field='value2'),
+                    ),
+                },
+                validators=outer_validators,
+                metadata=dict(protobuf_field='inner'),
             )
 
             class Options:
@@ -211,6 +257,15 @@ def test_required_unsets(model_class_required, msg_unsets):
     errors = ex.value.to_primitive()
     assert 'inner' in errors
     assert 'required' in errors['inner'][0]
+
+
+def test_required_unsets_renamed(model_class_field_renamed_required, msg_unsets):
+    with pytest.raises(DataError) as ex:
+        model_class_field_renamed_required.load_protobuf(msg_unsets)
+
+    errors = ex.value.to_primitive()
+    assert 'custom_inner' in errors
+    assert 'required' in errors['custom_inner'][0]
 
 
 def test_renamed_all_set(model_class_field_renamed, msg_all_set):
@@ -327,3 +382,35 @@ def test_validated_validation_error__inner(model_class_validated_factory, msg_al
     assert 'value2' in errors['inner']
     assert len(errors['inner']['value2']) == 1
     assert 'Please speak up!' in errors['inner']['value2'][0]
+
+
+def test_validated_validation_error_renamed(model_class_validated_renamed_factory, msg_all_set):
+    validator_func = Mock(side_effect=ValidationError('Please speak up!'))
+    model_cls = model_class_validated_renamed_factory(validator_func)
+
+    model = model_cls.load_protobuf(msg_all_set)
+    with pytest.raises(DataError) as ex:
+        model.validate()
+
+    errors = ex.value.to_primitive()
+
+    validator_func.assert_called_once_with(OneOfVariant('custom_value2', msg_all_set.value2))
+    assert 'custom_inner' in errors
+    assert 'Please speak up!' in errors['custom_inner'][0], f"`Please speak up!` in `{errors['custom_inner'][0]}`"
+
+
+def test_validated_validation_error_renamed__inner(model_class_validated_renamed_factory, msg_all_set):
+    validator_func = Mock(side_effect=ValidationError('Please speak up!'))
+    model_cls = model_class_validated_renamed_factory(None, validator_func)
+
+    model = model_cls.load_protobuf(msg_all_set)
+    with pytest.raises(DataError) as ex:
+        model.validate()
+
+    errors = ex.value.to_primitive()
+
+    validator_func.assert_called_once_with(msg_all_set.value2)
+    assert 'custom_inner' in errors
+    assert 'custom_value2' in errors['custom_inner']
+    assert len(errors['custom_inner']['custom_value2']) == 1
+    assert 'Please speak up!' in errors['custom_inner']['custom_value2'][0]
