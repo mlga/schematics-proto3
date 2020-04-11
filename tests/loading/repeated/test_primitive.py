@@ -61,6 +61,22 @@ def model_class_required():
 
 
 @pytest.fixture
+def model_class_required_renamed():
+
+    class ModelRequiredRenamed(Model):
+        custom_value = types.RepeatedType(
+            types.StringType(),
+            required=True,
+            metadata=dict(protobuf_field='value'),
+        )
+
+        class Options:
+            _protobuf_class = pb2.RepeatedPrimitive
+
+    return ModelRequiredRenamed
+
+
+@pytest.fixture
 def model_class_none_not_dumped():
 
     class ModelNoneNotDumped(Model):
@@ -98,6 +114,27 @@ def model_class_validated_factory():
             value = types.RepeatedType(
                 types.StringType(validators=inner_validators),
                 validators=outer_validators,
+            )
+
+            class Options:
+                _protobuf_class = pb2.RepeatedPrimitive
+
+        return ModelValidated
+
+    return _factory
+
+
+@pytest.fixture
+def model_class_validated_renamed_factory():
+    def _factory(validator_func=None, inner_validator_func=None):
+        outer_validators = [validator_func] if validator_func else []
+        inner_validators = [inner_validator_func] if inner_validator_func else []
+
+        class ModelValidated(Model):
+            custom_value = types.RepeatedType(
+                types.StringType(validators=inner_validators),
+                validators=outer_validators,
+                metadata=dict(protobuf_field='value'),
             )
 
             class Options:
@@ -186,6 +223,15 @@ def test_required_unsets(model_class_required, msg_unsets):
     errors = ex.value.to_primitive()
     assert 'value' in errors
     assert 'required' in errors['value'][0]
+
+
+def test_required_renamed_unsets(model_class_required_renamed, msg_unsets):
+    with pytest.raises(DataError) as ex:
+        model_class_required_renamed.load_protobuf(msg_unsets)
+
+    errors = ex.value.to_primitive()
+    assert 'custom_value' in errors
+    assert 'required' in errors['custom_value'][0]
 
 
 def test_renamed_all_set(model_class_field_renamed, msg_all_set):
@@ -293,3 +339,34 @@ def test_validated_validation_error__inner(model_class_validated_factory, msg_al
     assert 'Please speak up!' in errors['value'][0]
     assert 'Please speak up!' in errors['value'][1]
     assert 'Please speak up!' in errors['value'][2]
+
+
+def test_validated_validation_error_renamed(model_class_validated_renamed_factory, msg_all_set):
+    validator_func = Mock(side_effect=ValidationError('Please speak up!'))
+    model_cls = model_class_validated_renamed_factory(validator_func)
+
+    model = model_cls.load_protobuf(msg_all_set)
+    with pytest.raises(DataError) as ex:
+        model.validate()
+
+    errors = ex.value.to_primitive()
+
+    assert 'custom_value' in errors
+    assert 'Please speak up!' in errors['custom_value'][0], f"`Please speak up!` in `{errors['custom_value'][0]}`"
+
+
+def test_validated_validation_error_renamed__inner(model_class_validated_renamed_factory, msg_all_set):
+    validator_func = Mock(side_effect=ValidationError('Please speak up!'))
+    model_cls = model_class_validated_renamed_factory(None, validator_func)
+
+    model = model_cls.load_protobuf(msg_all_set)
+    with pytest.raises(DataError) as ex:
+        model.validate()
+
+    errors = ex.value.to_primitive()
+
+    assert 'custom_value' in errors
+    assert len(errors['custom_value']) == 3
+    assert 'Please speak up!' in errors['custom_value'][0]
+    assert 'Please speak up!' in errors['custom_value'][1]
+    assert 'Please speak up!' in errors['custom_value'][2]

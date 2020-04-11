@@ -7,121 +7,130 @@ from schematics.exceptions import DataError, ValidationError
 from schematics_proto3.models import Model
 
 
-def construct_model_class_optional(field_type_cls, protobuf_msg_cls):
-    class ModelOptional(Model):
-        value = field_type_cls()
+def parametrize_for(tag):
+    def _decorator(func):
+        func._paramertize_for = tag
 
-        class Options:
-            _protobuf_class = protobuf_msg_cls
-
-    return ModelOptional
+        return func
+    return _decorator
 
 
-def construct_model_class_required(field_type_cls, protobuf_msg_cls):
-    class ModelRequired(Model):
-        value = field_type_cls(required=True)
-
-        class Options:
-            _protobuf_class = protobuf_msg_cls
-
-    return ModelRequired
-
-
-def construct_model_class_none_not_dumped(field_type_cls, protobuf_msg_cls):
-    class ModelNoneNotDumped(Model):
-        value = field_type_cls()
-
-        class Options:
-            _protobuf_class = protobuf_msg_cls
-            serialize_when_none = False
-
-    return ModelNoneNotDumped
-
-
-def construct_model_class_field_renamed(field_type_cls, protobuf_msg_cls):
-    class ModelFieldRenamed(Model):
-        custom_name = field_type_cls(metadata=dict(protobuf_field='value'))
-
-        class Options:
-            _protobuf_class = protobuf_msg_cls
-
-    return ModelFieldRenamed
-
-
-def construct_model_class_validated(
-        field_type_cls,
-        protobuf_msg_cls,
-        validator_func,
-):
-    class ModelValidated(Model):
-        value = field_type_cls(validators=[validator_func])
-
-        class Options:
-            _protobuf_class = protobuf_msg_cls
-
-    return ModelValidated
-
-
-class CommonWrappersTests:
+class CommonPrimitivesTests:
 
     field_type_class = NotImplemented
     protobuf_msg_class = NotImplemented
 
-    def get_model_class_optional(self):
-        if (self.field_type_class is NotImplemented
-                or self.protobuf_msg_class is NotImplemented
-        ):
-            raise NotImplementedError()
+    def pytest_generate_tests(self, metafunc):
+        param_rule = getattr(metafunc.function, '_paramertize_for', None)
 
-        return construct_model_class_optional(
-            self.field_type_class,
-            self.protobuf_msg_class,
-        )
+        if param_rule == 'all validation cases':
+            metafunc.parametrize(
+                'field_name,model_factory',
+                [
+                    ('value', self.get_model_class_validated),
+                    ('custom_name', self.get_model_class_renamed_validated),
+                ],
+                ids=[
+                    'optional',
+                    'renamed',
+                ]
+            )
+            metafunc.parametrize(
+                'msg',
+                [
+                    self.get_msg_all_set(),
+                    self.get_msg_unsets(),
+                ],
+                ids=[
+                    'msg_all_set',
+                    'msg_unsets',
+                ]
+            )
+        if param_rule == 'positive loading cases':
+            metafunc.parametrize(
+                'field_name,model_cls',
+                [
+                    ('value', self.get_model_class_optional()),
+                    ('value', self.get_model_class_none_not_dumped()),
+                    ('value', self.get_model_class_required()),
+                    ('custom_name', self.get_model_class_renamed()),
+                ],
+                ids=[
+                    'optional',
+                    'none_not_dumped',
+                    'required',
+                    'renamed',
+                ]
+            )
+            metafunc.parametrize(
+                'msg',
+                [
+                    self.get_msg_all_set(),
+                    self.get_msg_unsets(),
+                ],
+                ids=[
+                    'msg_all_set',
+                    'msg_unsets',
+                ]
+            )
+
+    def get_model_class_optional(self):
+        class ModelOptional(Model):
+            value = self.field_type_class()
+
+            class Options:
+                _protobuf_class = self.protobuf_msg_class
+
+        return ModelOptional
 
     def get_model_class_required(self):
-        if (self.field_type_class is NotImplemented
-                or self.protobuf_msg_class is NotImplemented
-        ):
-            raise NotImplementedError()
+        class ModelRequired(Model):
+            value = self.field_type_class(required=True)
 
-        return construct_model_class_required(
-            self.field_type_class,
-            self.protobuf_msg_class,
-        )
+            class Options:
+                _protobuf_class = self.protobuf_msg_class
+
+        return ModelRequired
 
     def get_model_class_none_not_dumped(self):
-        if (self.field_type_class is NotImplemented
-                or self.protobuf_msg_class is NotImplemented
-        ):
-            raise NotImplementedError()
+        class ModelNoneNotDumped(Model):
+            value = self.field_type_class()
 
-        return construct_model_class_none_not_dumped(
-            self.field_type_class,
-            self.protobuf_msg_class,
-        )
+            class Options:
+                _protobuf_class = self.protobuf_msg_class
+                serialize_when_none = False
+
+        return ModelNoneNotDumped
 
     def get_model_class_renamed(self):
-        if (self.field_type_class is NotImplemented
-                or self.protobuf_msg_class is NotImplemented
-        ):
-            raise NotImplementedError()
+        class ModelFieldRenamed(Model):
+            custom_name = self.field_type_class(metadata=dict(protobuf_field='value'))
 
-        return construct_model_class_field_renamed(
-            self.field_type_class,
-            self.protobuf_msg_class,
-        )
+            class Options:
+                _protobuf_class = self.protobuf_msg_class
+
+        return ModelFieldRenamed
 
     def get_model_class_validated(self, validator_func):
-        if (self.field_type_class is NotImplemented
-                or self.protobuf_msg_class is NotImplemented
-        ):
-            raise NotImplementedError()
+        class ModelValidated(Model):
+            value = self.field_type_class(validators=[validator_func])
 
-        return construct_model_class_validated(
-            self.field_type_class,
-            self.protobuf_msg_class,
-            validator_func,
-        )
+            class Options:
+                _protobuf_class = self.protobuf_msg_class
+
+        return ModelValidated
+
+    def get_model_class_renamed_validated(self, validator_func):
+        class ModelValidated(Model):
+            custom_name = self.field_type_class(
+                metadata=dict(protobuf_field='value'),
+                validators=[validator_func],
+            )
+
+            class Options:
+                _protobuf_class = self.protobuf_msg_class
+
+        return ModelValidated
 
     # protobuf message getters
 
@@ -133,190 +142,53 @@ class CommonWrappersTests:
 
     # test cases
 
-    def test_optional_all_set(self):
-        model_cls = self.get_model_class_optional()
-        msg = self.get_msg_all_set()
-
+    @parametrize_for('positive loading cases')
+    def test_load_message__ok(self, field_name, model_cls, msg):
         model = model_cls.load_protobuf(msg)
         model.validate()
 
         # check model instance fields
-        assert model.value == msg.value
+        assert getattr(model, field_name) == msg.value
 
         # check primitive dump
         data = model.to_primitive()
 
-        assert 'value' in data
-        assert data['value'] == msg.value
+        assert field_name in data
+        assert data[field_name] == msg.value
 
         # compare dump to native
         assert model.to_native() == data
 
-    def test_optional_unsets(self):
-        model_cls = self.get_model_class_optional()
-        msg = self.get_msg_unsets()
-
-        model = model_cls.load_protobuf(msg)
-        model.validate()
-
-        # check model instance fields
-        assert model.value == msg.value
-
-        # check primitive dump
-        data = model.to_primitive()
-
-        assert 'value' in data
-        assert data['value'] == msg.value
-
-        # compare dump to native
-        assert model.to_native() == data
-
-    def test_none_not_dumped_all_set(self):
-        model_cls = self.get_model_class_none_not_dumped()
-        msg = self.get_msg_all_set()
-
-        model = model_cls.load_protobuf(msg)
-        model.validate()
-
-        # check model instance fields
-        assert model.value == msg.value
-
-        # check primitive dump
-        data = model.to_primitive()
-
-        assert 'value' in data
-        assert data['value'] == msg.value
-
-        # compare dump to native
-        assert model.to_native() == data
-
-    def test_none_not_dumped_unsets(self):
-        model_cls = self.get_model_class_none_not_dumped()
-        msg = self.get_msg_unsets()
-
-        model = model_cls.load_protobuf(msg)
-        model.validate()
-
-        # check model instance fields
-        assert model.value == msg.value
-
-        # check primitive dump
-        data = model.to_primitive()
-
-        assert 'value' in data
-        assert data['value'] == msg.value
-
-        # compare dump to native
-        assert model.to_native() == data
-
-    def test_required_unsets(self):
-        model_cls = self.get_model_class_required()
-        msg = self.get_msg_unsets()
-
-        model = model_cls.load_protobuf(msg)
-        model.validate()
-
-        # check model instance fields
-        assert model.value == msg.value
-
-        # check primitive dump
-        data = model.to_primitive()
-
-        assert 'value' in data
-        assert data['value'] == msg.value
-
-        # compare dump to native
-        assert model.to_native() == data
-
-    def test_renamed_all_set(self):
-        model_cls = self.get_model_class_renamed()
-        msg = self.get_msg_all_set()
-
-        model = model_cls.load_protobuf(msg)
-        model.validate()
-
-        # check model instance fields
-        assert model.custom_name == msg.value
-
-        # check primitive dump
-        data = model.to_primitive()
-
-        assert 'custom_name' in data
-        assert data['custom_name'] == msg.value
-
-        # compare dump to native
-        assert model.to_native() == data
-
-    def test_renamed_unsets(self):
-        model_cls = self.get_model_class_renamed()
-        msg = self.get_msg_unsets()
-
-        model = model_cls.load_protobuf(msg)
-        model.validate()
-
-        # check model instance fields
-        assert model.custom_name == msg.value
-
-        # check primitive dump
-        data = model.to_primitive()
-
-        assert 'custom_name' in data
-        assert data['custom_name'] == msg.value
-
-        # compare dump to native
-        assert model.to_native() == data
-
-    def test_validated_all_set(self):
+    @parametrize_for('all validation cases')
+    def test_validate__ok(self, field_name, model_factory, msg):
         validator_func = Mock()
-        model_cls = self.get_model_class_validated(validator_func)
-        msg = self.get_msg_all_set()
+        model_cls = model_factory(validator_func)
 
         model = model_cls.load_protobuf(msg)
         model.validate()
 
         # check model instance fields
-        assert model.value == msg.value
+        assert getattr(model, field_name) == msg.value
         validator_func.assert_called_once_with(msg.value)
 
         # check primitive dump
         data = model.to_primitive()
 
-        assert 'value' in data
-        assert data['value'] == msg.value
+        assert field_name in data
+        assert data[field_name] == msg.value
 
         # compare dump to native
         assert model.to_native() == data
 
-    def test_validated_unsets(self):
-        validator_func = Mock()
-        model_cls = self.get_model_class_validated(validator_func)
-        msg = self.get_msg_unsets()
-
-        model = model_cls.load_protobuf(msg)
-        model.validate()
-
-        # check model instance fields
-        assert model.value == msg.value
-        validator_func.assert_called_once_with(msg.value)
-
-        # check primitive dump
-        data = model.to_primitive()
-
-        assert 'value' in data
-        assert data['value'] == msg.value
-
-        # compare dump to native
-        assert model.to_native() == data
-
-    def test_validated_validation_error(self):
+    @parametrize_for('all validation cases')
+    def test_validate__error(self, field_name, model_factory, msg):
         validator_func = Mock(side_effect=ValidationError('Please speak up!'))
-        model_cls = self.get_model_class_validated(validator_func)
-        msg = self.get_msg_all_set()
+        model_cls = model_factory(validator_func)
 
         model = model_cls.load_protobuf(msg)
         with pytest.raises(DataError) as ex:
             model.validate()
 
         errors = ex.value.to_primitive()
-        assert 'value' in errors
-        assert 'Please speak up!' in errors['value'][0], f"`Please speak up!` in `{errors['value'][0]}`"
+        assert field_name in errors
+        assert 'Please speak up!' in errors[field_name][0], f"`Please speak up!` in `{errors[field_name][0]}`"

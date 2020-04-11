@@ -132,6 +132,35 @@ def model_class_field_renamed():
 
 
 @pytest.fixture
+def model_class_field_renamed_required():
+
+    class ModelFieldRenamedRequired(Model):
+
+        class InnerMsgModel(Model):
+            custom_value = types.StringType(metadata=dict(protobuf_field='value'))
+
+            class Options:
+                _protobuf_class = pb2.OneOfNested.Inner
+
+        custom_inner = types.OneOfType(
+            variants_spec={
+                'custom_value1': types.ModelType(
+                    InnerMsgModel,
+                    metadata=dict(protobuf_field='value1'),
+                ),
+                'value2': types.StringValueType(),
+            },
+            metadata=dict(protobuf_field='inner'),
+            required=True,
+        )
+
+        class Options:
+            _protobuf_class = pb2.OneOfNested
+
+    return ModelFieldRenamedRequired
+
+
+@pytest.fixture
 def model_class_validated_factory():
     def _factory(validator_func=None, inner_validator_func=None):
         outer_validators = [validator_func] if validator_func else []
@@ -151,6 +180,43 @@ def model_class_validated_factory():
                     'value2': types.StringValueType(),
                 },
                 validators=outer_validators,
+            )
+
+            class Options:
+                _protobuf_class = pb2.OneOfNested
+
+        return ModelValidated
+
+    return _factory
+
+
+@pytest.fixture
+def model_class_validated_reamed_factory():
+    def _factory(validator_func=None, inner_validator_func=None):
+        outer_validators = [validator_func] if validator_func else []
+        inner_validators = [inner_validator_func] if inner_validator_func else []
+
+        class ModelValidated(Model):
+
+            class InnerMsgModel(Model):
+                custom_value = types.StringType(
+                    validators=inner_validators,
+                    metadata=dict(protobuf_field='value'),
+                )
+
+                class Options:
+                    _protobuf_class = pb2.OneOfNested.Inner
+
+            custom_inner = types.OneOfType(
+                variants_spec={
+                    'custom_value1': types.ModelType(
+                        InnerMsgModel,
+                        metadata=dict(protobuf_field='value1'),
+                    ),
+                    'value2': types.StringValueType(),
+                },
+                validators=outer_validators,
+                metadata=dict(protobuf_field='inner'),
             )
 
             class Options:
@@ -249,6 +315,15 @@ def test_required_unsets(model_class_required, msg_unsets):
     errors = ex.value.to_primitive()
     assert 'inner' in errors
     assert 'required' in errors['inner'][0]
+
+
+def test_required_renqmed_unsets(model_class_field_renamed_required, msg_unsets):
+    with pytest.raises(DataError) as ex:
+        model_class_field_renamed_required.load_protobuf(msg_unsets)
+
+    errors = ex.value.to_primitive()
+    assert 'custom_inner' in errors
+    assert 'required' in errors['custom_inner'][0]
 
 
 def test_renamed_all_set(model_class_field_renamed, msg_all_set):
@@ -378,3 +453,41 @@ def test_validated_validation_error__inner(model_class_validated_factory, msg_al
     assert 'value' in errors['inner']['value1']
     assert len(errors['inner']['value1']['value']) == 1
     assert 'Please speak up!' in errors['inner']['value1']['value'][0]
+
+
+def test_validated_validation_error_renamed(model_class_validated_reamed_factory, msg_all_set):
+    validator_func = Mock(side_effect=ValidationError('Please speak up!'))
+    model_cls = model_class_validated_reamed_factory(validator_func)
+
+    model = model_cls.load_protobuf(msg_all_set)
+    with pytest.raises(DataError) as ex:
+        model.validate()
+
+    errors = ex.value.to_primitive()
+
+    validator_func.assert_called_once_with(
+        OneOfVariant(
+            'custom_value1',
+            model_cls.InnerMsgModel({'custom_value': msg_all_set.value1.value}),
+        )
+    )
+    assert 'custom_inner' in errors
+    assert 'Please speak up!' in errors['custom_inner'][0], f"`Please speak up!` in `{errors['custom_inner'][0]}`"
+
+
+def test_validated_validation_error__inner_renamed(model_class_validated_reamed_factory, msg_all_set):
+    validator_func = Mock(side_effect=ValidationError('Please speak up!'))
+    model_cls = model_class_validated_reamed_factory(None, validator_func)
+
+    model = model_cls.load_protobuf(msg_all_set)
+    with pytest.raises(DataError) as ex:
+        model.validate()
+
+    errors = ex.value.to_primitive()
+
+    validator_func.assert_called_once_with(msg_all_set.value1.value)
+    assert 'custom_inner' in errors
+    assert 'custom_value1' in errors['custom_inner']
+    assert 'custom_value' in errors['custom_inner']['custom_value1']
+    assert len(errors['custom_inner']['custom_value1']['custom_value']) == 1
+    assert 'Please speak up!' in errors['custom_inner']['custom_value1']['custom_value'][0]
