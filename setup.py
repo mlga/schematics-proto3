@@ -44,6 +44,8 @@ setup(
             'pytest~=5.0',
             'pytest-cov~=2.7',
             'pytest-html~=1.20',
+            'Sphinx==3.0.1',
+            'sphinx-rtd-theme==0.4.3',
         ],
     },
     packages=find_packages(exclude=['tests']),
