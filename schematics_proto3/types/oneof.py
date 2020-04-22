@@ -1,154 +1,18 @@
 # -*- coding:utf-8 -*-
-import os
-import random
-
 from schematics.common import NOT_NONE
-from schematics.exceptions import ConversionError, ValidationError, CompoundError, StopValidationError, DataError
-from schematics.types import BaseType, FloatType, BooleanType, StringType, IntType, \
-    ModelType as SchModelType, ListType, CompoundType
+from schematics.exceptions import ValidationError, DataError, CompoundError, StopValidationError
+from schematics.types import CompoundType, BaseType
 from schematics.undefined import Undefined
 
+from schematics_proto3.oneof import OneOfVariant
+from schematics_proto3.types.base import ProtobufTypeMixin
 from schematics_proto3.unset import Unset
 
 
-class ProtobufWrapperMixin:
-    """
-    Extension to schematics' type classes. It provides proper handling of Unset
-    value, which accounts for:
-     * serialization
-     * deserialization
-     * validation
-
-    Implemented as a mixin to be an intermediate class between concrete type
-    classes and schematics base classes.
-
-    For example:
-    ```
-    class IntValueType(ProtobufWrapperMixin, IntType):
-    pass
-    ```
-    Above, handling of Unset value if done by ProtobufWrapperMixin, proper int
-    values will be serialized, deserialized and validated by IntType. This way
-    we can utilise what we already have.
-    """
-
-    def check_required(self: BaseType, value, context):
-        # Treat Unset as required rule violation.
-        if self.required and value is Unset:
-            raise ConversionError(self.messages['required'])
-
-        super().check_required(value, context)
-
-    def validate(self: BaseType, value, context=None):
-        # If a value is Unset, we want to perform only require check alone.
-        # Other validators provided for types like float etc. will fail
-        # here and have no point in bing executed.
-        if value is Unset:
-            return Unset
-
-        return super().validate(value, context)
-
-    def convert(self, value, context):
-        if value is Unset:
-            return Unset
-
-        return super().convert(value, context)
-
-    def export(self, value, format, context):  # pylint:disable=redefined-builtin
-        if value is Unset:
-            export_level = self.get_export_level(context)
-
-            if export_level <= NOT_NONE:
-                return Undefined
-
-            return Unset
-
-        return super().export(value, format, context)
+__all__ = ['OneOfType']
 
 
-class IntValueType(ProtobufWrapperMixin, IntType):
-    pass
-
-
-class FloatValueType(ProtobufWrapperMixin, FloatType):
-    pass
-
-
-class BoolValueType(ProtobufWrapperMixin, BooleanType):
-    pass
-
-
-class StringValueType(ProtobufWrapperMixin, StringType):
-    pass
-
-
-class BytesValueType(ProtobufWrapperMixin, BaseType):
-
-    MESSAGES = {
-        'max_length': "Bytes value is too long.",
-        'min_length': "Bytes value is too short.",
-    }
-
-    def __init__(self, max_length=None, min_length=None, **kwargs):
-        # TODO: Validate boundaries.
-        self.max_length = max_length
-        self.min_length = min_length
-
-        super().__init__(**kwargs)
-
-    def validate_length(self, value, context=None):
-        length = len(value)
-        if self.max_length is not None and length > self.max_length:
-            raise ValidationError(self.messages['max_length'])
-        if self.min_length is not None and length < self.min_length:
-            raise ValidationError(self.messages['min_length'])
-
-    def _mock(self, context=None):
-        length = random.randint(
-            self.min_length if self.min_length is None else 5,
-            self.max_length if self.max_length is None else 256,
-        )
-        return os.urandom(length)
-
-
-class ModelType(ProtobufWrapperMixin, SchModelType):
-
-    def convert(self, value, context):
-        # TODO: If instance does not match protobuf msg type but is a
-        #       protobuf msg nerveless, raise informative exception.
-        # pylint: disable=protected-access
-        if isinstance(value, self.model_class._options.extras['_protobuf_class']):
-            return self.model_class.load_protobuf(value)
-
-        return super().convert(value, context)
-
-
-class RepeatedType(ProtobufWrapperMixin, ListType):
-    pass
-
-
-class OneOfVariant:
-
-    slots = ('variant', 'value')
-
-    def __init__(self, variant, value):
-        self.variant = variant
-        self.value = value
-
-    def __str__(self):
-        return f'OneOfVariant<{self.variant}, {self.value}>'
-
-    def __eq__(self, other):
-        if not isinstance(other, OneOfVariant):
-            return False
-
-        return self.variant == other.variant and self.value == other.value
-
-    def __repr__(self):
-        return f'OneOfVariant<{self.variant}, {self.value}>'
-
-
-class OneOfType(ProtobufWrapperMixin, CompoundType):
+class OneOfType(ProtobufTypeMixin, CompoundType):
 
     def __init__(self, variants_spec, *args, **kwargs):
         # TODO: Check that each:

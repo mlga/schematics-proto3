@@ -8,7 +8,7 @@ from tests.utils.wire import mimic_protobuf_wire_transfer
 
 class TestFloat(CommonWrappersTests):
 
-    field_type_class = types.FloatValueType
+    field_type_class = types.FloatWrapperType
     protobuf_msg_class = pb2.WrappedFloat
 
     def get_msg_all_set(self):

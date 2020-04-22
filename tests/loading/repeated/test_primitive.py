@@ -3,6 +3,7 @@ from unittest.mock import Mock
 
 import pytest
 from schematics.exceptions import DataError, ValidationError
+from schematics.types import StringType
 
 from schematics_proto3 import types
 from schematics_proto3.models import Model
@@ -40,7 +41,7 @@ def msg_unsets():
 def model_class_optional():
 
     class ModelOptional(Model):
-        value = types.RepeatedType(types.StringType())
+        value = types.RepeatedType(StringType())
 
         class Options:
             _protobuf_class = pb2.RepeatedPrimitive
@@ -52,7 +53,7 @@ def model_class_optional():
 def model_class_required():
 
     class ModelRequired(Model):
-        value = types.RepeatedType(types.StringType(), required=True)
+        value = types.RepeatedType(StringType(), required=True)
 
         class Options:
             _protobuf_class = pb2.RepeatedPrimitive
@@ -65,7 +66,7 @@ def model_class_required_renamed():
 
     class ModelRequiredRenamed(Model):
         custom_value = types.RepeatedType(
-            types.StringType(),
+            StringType(),
             required=True,
             metadata=dict(protobuf_field='value'),
         )
@@ -80,7 +81,7 @@ def model_class_required_renamed():
 def model_class_none_not_dumped():
 
     class ModelNoneNotDumped(Model):
-        value = types.RepeatedType(types.StringType())
+        value = types.RepeatedType(StringType())
 
         class Options:
             _protobuf_class = pb2.RepeatedPrimitive
@@ -94,7 +95,7 @@ def model_class_field_renamed():
 
     class ModelFieldRenamed(Model):
         custom_value = types.RepeatedType(
-            types.StringType(),
+            StringType(),
             metadata=dict(protobuf_field='value'),
         )
 
@@ -112,7 +113,7 @@ def model_class_validated_factory():
 
         class ModelValidated(Model):
             value = types.RepeatedType(
-                types.StringType(validators=inner_validators),
+                StringType(validators=inner_validators),
                 validators=outer_validators,
             )
 
@@ -132,7 +133,7 @@ def model_class_validated_renamed_factory():
 
         class ModelValidated(Model):
             custom_value = types.RepeatedType(
-                types.StringType(validators=inner_validators),
+                StringType(validators=inner_validators),
                 validators=outer_validators,
                 metadata=dict(protobuf_field='value'),
             )

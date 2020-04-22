@@ -6,7 +6,8 @@ from google.protobuf import wrappers_pb2
 from google.protobuf.message import Message
 from schematics.types import ModelType, ListType
 
-from schematics_proto3.types import ProtobufWrapperMixin, OneOfType
+from schematics_proto3.types import OneOfType
+from schematics_proto3.types.base import ProtobufTypeMixin
 from schematics_proto3.unset import Unset
 
 PRIMITIVE_TYPES = (str, int, float, bool, bytes)
@@ -50,6 +51,9 @@ def get_value(msg, field_name, field_names):
 
 
 class Model(schematics.Model):
+    """
+    Base class for models operating with protobuf messages.
+    """
     # pylint: disable=no-member
 
     def __init__(self, *args, **kwargs):
@@ -114,7 +118,7 @@ class Model(schematics.Model):
         for name, field in self.fields.items():
             pb_name = field.metadata.get('protobuf_field', name)
 
-            if isinstance(field, ProtobufWrapperMixin):
+            if isinstance(field, ProtobufTypeMixin):
                 # This is a wrapped value, assign it iff not Unset.
                 val = getattr(self, name)
                 if val is not Unset:

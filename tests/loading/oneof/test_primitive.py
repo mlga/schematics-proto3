@@ -3,10 +3,11 @@ from unittest.mock import Mock
 
 import pytest
 from schematics.exceptions import DataError, ValidationError
+from schematics.types import IntType, StringType
 
 from schematics_proto3 import types
 from schematics_proto3.models import Model
-from schematics_proto3.types import OneOfVariant
+from schematics_proto3.oneof import OneOfVariant
 from schematics_proto3.unset import Unset
 from tests import schematics_proto3_tests_pb2 as pb2
 from tests.utils.randoms import value_for_primitive
@@ -40,8 +41,8 @@ def model_class_optional():
     class ModelOptional(Model):
 
         inner = types.OneOfType(variants_spec={
-            'value1': types.IntType(),
-            'value2': types.StringType(),
+            'value1': IntType(),
+            'value2': StringType(),
         })
 
         class Options:
@@ -56,8 +57,8 @@ def model_class_required():
     class ModelRequired(Model):
         inner = types.OneOfType(
             variants_spec={
-                'value1': types.IntType(),
-                'value2': types.StringType(),
+                'value1': IntType(),
+                'value2': StringType(),
             },
             required=True,
         )
@@ -73,8 +74,8 @@ def model_class_none_not_dumped():
 
     class ModelNoneNotDumped(Model):
         inner = types.OneOfType(variants_spec={
-            'value1': types.IntType(),
-            'value2': types.StringType(),
+            'value1': IntType(),
+            'value2': StringType(),
         })
 
         class Options:
@@ -90,8 +91,8 @@ def model_class_field_renamed():
     class ModelFieldRenamed(Model):
         custom_inner = types.OneOfType(
             variants_spec={
-                'value1': types.IntType(),
-                'custom_value2': types.StringType(metadata=dict(protobuf_field='value2')),
+                'value1': IntType(),
+                'custom_value2': StringType(metadata=dict(protobuf_field='value2')),
             },
             metadata=dict(protobuf_field='inner'),
         )
@@ -108,8 +109,8 @@ def model_class_field_renamed_required():
     class ModelFieldRenamedRequired(Model):
         custom_inner = types.OneOfType(
             variants_spec={
-                'value1': types.IntType(),
-                'custom_value2': types.StringType(metadata=dict(protobuf_field='value2')),
+                'value1': IntType(),
+                'custom_value2': StringType(metadata=dict(protobuf_field='value2')),
             },
             metadata=dict(protobuf_field='inner'),
             required=True,
@@ -130,8 +131,8 @@ def model_class_validated_factory():
         class ModelValidated(Model):
             inner = types.OneOfType(
                 variants_spec={
-                    'value1': types.IntType(),
-                    'value2': types.StringType(validators=inner_validators),
+                    'value1': IntType(),
+                    'value2': StringType(validators=inner_validators),
                 },
                 validators=outer_validators,
             )
@@ -153,8 +154,8 @@ def model_class_validated_renamed_factory():
         class ModelValidated(Model):
             custom_inner = types.OneOfType(
                 variants_spec={
-                    'value1': types.IntType(),
-                    'custom_value2': types.StringType(
+                    'value1': IntType(),
+                    'custom_value2': StringType(
                         validators=inner_validators,
                         metadata=dict(protobuf_field='value2'),
                     ),

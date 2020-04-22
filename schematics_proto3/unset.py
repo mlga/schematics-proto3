@@ -1,9 +1,15 @@
 # -*- coding:utf-8 -*-
+"""
+Test module docstring.
+"""
 import threading
 from typing import Type
 
 
 class UnsetType:
+    """
+    Test docstring.
+    """
 
     __slots__ = []
 

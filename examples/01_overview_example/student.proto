@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+
+package overview_example;
+
+message Student {
+    message CourseGrade {
+        string course_id = 1;
+        string grade = 2;
+    }
+
+    uint32 id = 1;
+    google.protobuf.StringValue name = 2;
+    repeated CourseGrade grades = 3;
+}

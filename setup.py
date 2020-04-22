@@ -48,7 +48,7 @@ setup(
             'sphinx-rtd-theme==0.4.3',
         ],
     },
-    packages=find_packages(exclude=['tests']),
+    packages=find_packages(exclude=['tests*', 'examples*']),
     include_package_data=True,
     platforms='any',
     zip_safe=False,
