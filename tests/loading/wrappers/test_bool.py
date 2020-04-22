@@ -8,7 +8,7 @@ from tests.utils.wire import mimic_protobuf_wire_transfer
 
 class TestBool(CommonWrappersTests):
 
-    field_type_class = types.BoolValueType
+    field_type_class = types.BoolWrapperType
     protobuf_msg_class = pb2.WrappedBool
 
     def get_msg_all_set(self):

@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from schematics_proto3 import types
+from schematics.types import StringType
 from tests.loading.primitives import CommonPrimitivesTests
 from tests import schematics_proto3_tests_pb2 as pb2
 from tests.utils.randoms import value_for_primitive
@@ -8,7 +8,7 @@ from tests.utils.wire import mimic_protobuf_wire_transfer
 
 class TestString(CommonPrimitivesTests):
 
-    field_type_class = types.StringType
+    field_type_class = StringType
     protobuf_msg_class = pb2.String
 
     def get_msg_all_set(self):

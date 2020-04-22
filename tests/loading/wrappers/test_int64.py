@@ -8,7 +8,7 @@ from tests.utils.wire import mimic_protobuf_wire_transfer
 
 class TestInt64(CommonWrappersTests):
 
-    field_type_class = types.IntValueType
+    field_type_class = types.IntWrapperType
     protobuf_msg_class = pb2.WrappedInt64
 
     def get_msg_all_set(self):
