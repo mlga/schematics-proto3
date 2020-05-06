@@ -1,6 +1,6 @@
-=====================
-More complete example
-=====================
+============
+Full example
+============
 .. note::  This is incomplete and will be extended to include validation and other,
            more complex patterns.
 
