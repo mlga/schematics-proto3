@@ -6,29 +6,41 @@ from schematics.exceptions import ValidationError
 from schematics.types import IntType, FloatType, BooleanType, StringType, BaseType
 
 from schematics_proto3.types.base import ProtobufTypeMixin
-
+from schematics_proto3.unset import Unset
 
 __all__ = ['IntWrapperType', 'FloatWrapperType', 'BoolWrapperType',
            'StringWrapperType', 'BytesWrapperType']
 
 
-class IntWrapperType(ProtobufTypeMixin, IntType):
+class WrapperTypeMixin(ProtobufTypeMixin):
+
+    def convert_protobuf(self, msg, field_name, field_names):
+        # pylint: disable=no-self-use
+        if field_name not in field_names:
+            return Unset
+
+        value = getattr(msg, field_name)
+
+        return value.value
+
+
+class IntWrapperType(WrapperTypeMixin, IntType):
     pass
 
 
-class FloatWrapperType(ProtobufTypeMixin, FloatType):
+class FloatWrapperType(WrapperTypeMixin, FloatType):
     pass
 
 
-class BoolWrapperType(ProtobufTypeMixin, BooleanType):
+class BoolWrapperType(WrapperTypeMixin, BooleanType):
     pass
 
 
-class StringWrapperType(ProtobufTypeMixin, StringType):
+class StringWrapperType(WrapperTypeMixin, StringType):
     pass
 
 
-class BytesWrapperType(ProtobufTypeMixin, BaseType):
+class BytesWrapperType(WrapperTypeMixin, BaseType):
 
     MESSAGES = {
         'max_length': "Bytes value is too long.",
@@ -43,6 +55,7 @@ class BytesWrapperType(ProtobufTypeMixin, BaseType):
         super().__init__(**kwargs)
 
     def validate_length(self, value, context=None):
+        # pylint: disable=unused-argument
         length = len(value)
         if self.max_length is not None and length > self.max_length:
             raise ValidationError(self.messages['max_length'])

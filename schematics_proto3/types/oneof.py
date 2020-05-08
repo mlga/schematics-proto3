@@ -7,7 +7,7 @@ from schematics.undefined import Undefined
 from schematics_proto3.oneof import OneOfVariant
 from schematics_proto3.types.base import ProtobufTypeMixin
 from schematics_proto3.unset import Unset
-
+from schematics_proto3.utils import get_value_fallback
 
 __all__ = ['OneOfType']
 
@@ -71,7 +71,7 @@ class OneOfType(ProtobufTypeMixin, CompoundType):
         if isinstance(value, dict):
             if 'variant' not in value or 'value' not in value:
                 raise RuntimeError(
-                    f'OneOfVariant dict must have `variant` and `value` keys.'
+                    'OneOfVariant dict must have `variant` and `value` keys.'
                 )
             variant = OneOfVariant(value['variant'], value['value'])
 
@@ -144,3 +144,16 @@ class OneOfType(ProtobufTypeMixin, CompoundType):
 
     def _export(self, value, format, context):  # pylint:disable=redefined-builtin
         raise NotImplementedError()
+
+    def convert_protobuf(self, msg, field_name, field_names):
+        # TODO: Handle value error:
+        #       ValueError: Protocol message has no oneof "X" field.
+        variant_name = msg.WhichOneof(field_name)
+
+        if variant_name is None:
+            return Unset
+
+        self.variant = variant_name
+        convert_func = getattr(self.variant_type, 'convert_protobuf', get_value_fallback)
+
+        return convert_func(msg, variant_name, field_names)

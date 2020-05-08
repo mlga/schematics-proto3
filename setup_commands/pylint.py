@@ -24,6 +24,7 @@ class PylintCommand(distutils.cmd.Command):
             '--disable', 'missing-module-docstring',
             '--disable', 'missing-function-docstring',
             '--disable', 'missing-class-docstring',
+            '--disable', 'fixme',
             'schematics_proto3',
         ]
 
@@ -32,5 +33,4 @@ class PylintCommand(distutils.cmd.Command):
         try:
             subprocess.check_call(command)
         except subprocess.CalledProcessError as ex:
-            retcode = ex.returncode ^ 4
-            sys.exit(retcode)
+            sys.exit(ex.returncode)
