@@ -34,6 +34,9 @@ class UnsetType:
     def __bool__(self):
         return False
 
+    def __hash__(self):
+        return hash(self._lock)
+
     __nonzero__ = __bool__
 
     def __new__(cls: Type['UnsetType']):

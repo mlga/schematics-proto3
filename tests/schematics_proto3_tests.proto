@@ -135,3 +135,27 @@ message OneOfNested {
     google.protobuf.StringValue value2 = 2;
   }
 }
+
+/*
+ * Messages for enum test.
+ */
+enum Enum {
+  UNKNOWN = 0;
+  FIRST = 1;
+  SECOND = 2;
+}
+
+message SimpleEnum {
+  Enum value = 1;
+}
+
+message RepeatedEnum {
+  repeated Enum value = 1;
+}
+
+message OneOfEnum {
+  oneof inner {
+    google.protobuf.StringValue value1 = 1;
+    Enum value2 = 2;
+  }
+}
