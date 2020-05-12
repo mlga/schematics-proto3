@@ -6,8 +6,8 @@ To run this, just execute:
 $ python main.py
 Student ID: 42
 Student name: Jon Doe
-`maths` grade: A
-`physics` grade: A
+`maths` grade: Grade.A
+`physics` grade: Grade.A
 {'id': 42, 'name': 'Jon Doe', 'grades': [{'course_id': 'maths', 'grade': 'A'}, {'course_id': 'physics', 'grade': 'A'}]}
 ```
 

@@ -4,6 +4,7 @@
 
 import sys
 _b=sys.version_info[0]<3 and (lambda x:x) or (lambda x:x.encode('latin1'))
+from google.protobuf.internal import enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
@@ -21,10 +22,60 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='overview_example',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rstudent.proto\x12\x10overview_example\x1a\x1egoogle/protobuf/wrappers.proto\"\xa9\x01\n\x07Student\x12\n\n\x02id\x18\x01 \x01(\r\x12*\n\x04name\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x35\n\x06grades\x18\x03 \x03(\x0b\x32%.overview_example.Student.CourseGrade\x1a/\n\x0b\x43ourseGrade\x12\x11\n\tcourse_id\x18\x01 \x01(\t\x12\r\n\x05grade\x18\x02 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\rstudent.proto\x12\x10overview_example\x1a\x1egoogle/protobuf/wrappers.proto\"\xc2\x01\n\x07Student\x12\n\n\x02id\x18\x01 \x01(\r\x12*\n\x04name\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x35\n\x06grades\x18\x03 \x03(\x0b\x32%.overview_example.Student.CourseGrade\x1aH\n\x0b\x43ourseGrade\x12\x11\n\tcourse_id\x18\x01 \x01(\t\x12&\n\x05grade\x18\x02 \x01(\x0e\x32\x17.overview_example.Grade*>\n\x05Grade\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x05\n\x01\x46\x10\x01\x12\x05\n\x01\x45\x10\x02\x12\x05\n\x01\x44\x10\x03\x12\x05\n\x01\x43\x10\x04\x12\x05\n\x01\x42\x10\x05\x12\x05\n\x01\x41\x10\x06\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
+_GRADE = _descriptor.EnumDescriptor(
+  name='Grade',
+  full_name='overview_example.Grade',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='UNKNOWN', index=0, number=0,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='F', index=1, number=1,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='E', index=2, number=2,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='D', index=3, number=3,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='C', index=4, number=4,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='B', index=5, number=5,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='A', index=6, number=6,
+      serialized_options=None,
+      type=None),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=264,
+  serialized_end=326,
+)
+_sym_db.RegisterEnumDescriptor(_GRADE)
+
+Grade = enum_type_wrapper.EnumTypeWrapper(_GRADE)
+UNKNOWN = 0
+F = 1
+E = 2
+D = 3
+C = 4
+B = 5
+A = 6
 
 
 
@@ -44,8 +95,8 @@ _STUDENT_COURSEGRADE = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='grade', full_name='overview_example.Student.CourseGrade.grade', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -62,7 +113,7 @@ _STUDENT_COURSEGRADE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=190,
-  serialized_end=237,
+  serialized_end=262,
 )
 
 _STUDENT = _descriptor.Descriptor(
@@ -106,13 +157,15 @@ _STUDENT = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=68,
-  serialized_end=237,
+  serialized_end=262,
 )
 
+_STUDENT_COURSEGRADE.fields_by_name['grade'].enum_type = _GRADE
 _STUDENT_COURSEGRADE.containing_type = _STUDENT
 _STUDENT.fields_by_name['name'].message_type = google_dot_protobuf_dot_wrappers__pb2._STRINGVALUE
 _STUDENT.fields_by_name['grades'].message_type = _STUDENT_COURSEGRADE
 DESCRIPTOR.message_types_by_name['Student'] = _STUDENT
+DESCRIPTOR.enum_types_by_name['Grade'] = _GRADE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Student = _reflection.GeneratedProtocolMessageType('Student', (_message.Message,), dict(
