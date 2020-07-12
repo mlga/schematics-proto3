@@ -1,4 +1,7 @@
 # -*- coding:utf-8 -*-
+from dataclasses import dataclass
+from typing import Type
+
 import schematics
 from google.protobuf.message import Message
 
@@ -7,25 +10,52 @@ from schematics_proto3.unset import Unset
 from schematics_proto3.utils import get_value_fallback
 
 
-class Model(schematics.Model):
+class _Ignore:
+    """
+    Sentinel class to denote `protobuf_enum` argument in ProtobufEnum base
+    class.
+    """
+    # pylint: disable=too-few-public-methods
+    __slots__ = []
+
+
+@dataclass(frozen=True)
+class ModelOptions:
+    message_class: Type[Message]
+
+
+class ModelMeta(schematics.ModelMeta):
+
+    def __new__(mcs, name, bases, attrs, protobuf_message=None):
+        cls = super().__new__(mcs, name, bases, attrs)
+
+        if protobuf_message is _Ignore:
+            return cls
+
+        if protobuf_message is None:
+            raise RuntimeError(f'protobuf_enum argument of class {name} must be set')
+
+        if not issubclass(protobuf_message, Message):
+            raise RuntimeError('protobuf_enum must be a subclass of Protobuf message')
+
+        # TODO: Validate fields against protobuf message definition
+        cls.protobuf_options = ModelOptions(
+            message_class=protobuf_message,
+        )
+
+        return cls
+
+
+class Model(schematics.Model, metaclass=ModelMeta, protobuf_message=_Ignore):
     """
     Base class for models operating with protobuf messages.
     """
     # pylint: disable=no-member
 
-    def __init__(self, *args, **kwargs):
-        # TODO: Drop this when todo below is done.
-        # pylint: disable=useless-super-delegation
-        super().__init__(*args, **kwargs)
-        # TODO: Validate fields compatibility between schematics model and
-        #       protobuf message.
+    protobuf_options: ModelOptions
 
     @classmethod
     def load_protobuf(cls, msg):
-        # pylint: disable=too-many-branches
-        # TODO: Refactor this method and remove above comment.
-        assert issubclass(cls, schematics.Model)
-
         field_names = {descriptor.name for descriptor, _ in msg.ListFields()}
         values = {}
 
@@ -37,10 +67,10 @@ class Model(schematics.Model):
 
         return cls(values)
 
-    def to_protobuf(self: schematics.Model) -> Message:
+    def to_protobuf(self: 'Model') -> Message:
         assert isinstance(self, schematics.Model)
 
-        msg = self._options.extras['_protobuf_class']()
+        msg = self.protobuf_options.message_class()
 
         for name, field in self.fields.items():
             pb_name = field.metadata.get('protobuf_field', name)

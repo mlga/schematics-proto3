@@ -38,15 +38,12 @@ def msg_unsets():
 @pytest.fixture
 def model_class_optional():
 
-    class ModelOptional(Model):
+    class ModelOptional(Model, protobuf_message=pb2.OneOfPrimitive):
 
         inner = types.OneOfType(variants_spec={
             'value1': IntType(),
             'value2': StringType(),
         })
-
-        class Options:
-            _protobuf_class = pb2.OneOfPrimitive
 
     return ModelOptional
 
@@ -54,7 +51,7 @@ def model_class_optional():
 @pytest.fixture
 def model_class_required():
 
-    class ModelRequired(Model):
+    class ModelRequired(Model, protobuf_message=pb2.OneOfPrimitive):
         inner = types.OneOfType(
             variants_spec={
                 'value1': IntType(),
@@ -63,23 +60,19 @@ def model_class_required():
             required=True,
         )
 
-        class Options:
-            _protobuf_class = pb2.OneOfPrimitive
-
     return ModelRequired
 
 
 @pytest.fixture
 def model_class_none_not_dumped():
 
-    class ModelNoneNotDumped(Model):
+    class ModelNoneNotDumped(Model, protobuf_message=pb2.OneOfPrimitive):
         inner = types.OneOfType(variants_spec={
             'value1': IntType(),
             'value2': StringType(),
         })
 
         class Options:
-            _protobuf_class = pb2.OneOfPrimitive
             serialize_when_none = False
 
     return ModelNoneNotDumped
@@ -88,7 +81,7 @@ def model_class_none_not_dumped():
 @pytest.fixture
 def model_class_field_renamed():
 
-    class ModelFieldRenamed(Model):
+    class ModelFieldRenamed(Model, protobuf_message=pb2.OneOfPrimitive):
         custom_inner = types.OneOfType(
             variants_spec={
                 'value1': IntType(),
@@ -97,16 +90,13 @@ def model_class_field_renamed():
             metadata=dict(protobuf_field='inner'),
         )
 
-        class Options:
-            _protobuf_class = pb2.OneOfPrimitive
-
     return ModelFieldRenamed
 
 
 @pytest.fixture
 def model_class_field_renamed_required():
 
-    class ModelFieldRenamedRequired(Model):
+    class ModelFieldRenamedRequired(Model, protobuf_message=pb2.OneOfPrimitive):
         custom_inner = types.OneOfType(
             variants_spec={
                 'value1': IntType(),
@@ -115,9 +105,6 @@ def model_class_field_renamed_required():
             metadata=dict(protobuf_field='inner'),
             required=True,
         )
-
-        class Options:
-            _protobuf_class = pb2.OneOfPrimitive
 
     return ModelFieldRenamedRequired
 
@@ -128,7 +115,7 @@ def model_class_validated_factory():
         outer_validators = [validator_func] if validator_func else []
         inner_validators = [inner_validator_func] if inner_validator_func else []
 
-        class ModelValidated(Model):
+        class ModelValidated(Model, protobuf_message=pb2.OneOfPrimitive):
             inner = types.OneOfType(
                 variants_spec={
                     'value1': IntType(),
@@ -136,9 +123,6 @@ def model_class_validated_factory():
                 },
                 validators=outer_validators,
             )
-
-            class Options:
-                _protobuf_class = pb2.OneOfPrimitive
 
         return ModelValidated
 
@@ -151,7 +135,7 @@ def model_class_validated_renamed_factory():
         outer_validators = [validator_func] if validator_func else []
         inner_validators = [inner_validator_func] if inner_validator_func else []
 
-        class ModelValidated(Model):
+        class ModelValidated(Model, protobuf_message=pb2.OneOfPrimitive):
             custom_inner = types.OneOfType(
                 variants_spec={
                     'value1': IntType(),
@@ -163,9 +147,6 @@ def model_class_validated_renamed_factory():
                 validators=outer_validators,
                 metadata=dict(protobuf_field='inner'),
             )
-
-            class Options:
-                _protobuf_class = pb2.OneOfPrimitive
 
         return ModelValidated
 

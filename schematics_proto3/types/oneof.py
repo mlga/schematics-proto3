@@ -157,3 +157,11 @@ class OneOfType(ProtobufTypeMixin, CompoundType):
         convert_func = getattr(self.variant_type, 'convert_protobuf', get_value_fallback)
 
         return convert_func(msg, variant_name, field_names)
+
+    def export_protobuf(self, msg, field_name, value):
+        # TODO: Check that model_class is an instance of Model
+        if field_name is Unset:
+            return
+
+        self.variant = field_name
+        self.variant_type.export_protobuf(msg, field_name, value)

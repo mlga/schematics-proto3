@@ -17,3 +17,10 @@ def get_value_fallback(msg, field_name, field_names):
         return Unset
 
     return value
+
+
+def set_value_fallback(msg, field_name, value):
+    if value is Unset:
+        return
+
+    setattr(msg, field_name, value)
