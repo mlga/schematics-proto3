@@ -51,7 +51,7 @@ class ProtobufEnumMeta(EnumMeta):
 
             raise RuntimeError(
                 f'ProtobufEnum subclass cannot contain members other than '
-                f'`PROTOBUF_CLASS`. '
+                f'`protobuf_enum`. '
                 f'\n'
                 f'`{cls.__qualname__}` contains following '
                 f'excess members: {",".join(additional)}.'

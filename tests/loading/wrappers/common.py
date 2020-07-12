@@ -9,55 +9,42 @@ from schematics_proto3.unset import Unset
 
 
 def construct_model_class_optional(field_type_cls, protobuf_msg_cls):
-    class ModelOptional(Model):
+    class ModelOptional(Model, protobuf_message=protobuf_msg_cls):
         wrapped = field_type_cls()
-
-        class Options:
-            _protobuf_class = protobuf_msg_cls
 
     return ModelOptional
 
 
 def construct_model_class_required(field_type_cls, protobuf_msg_cls):
-    class ModelRequired(Model):
+    class ModelRequired(Model, protobuf_message=protobuf_msg_cls):
         wrapped = field_type_cls(required=True)
-
-        class Options:
-            _protobuf_class = protobuf_msg_cls
 
     return ModelRequired
 
 
 def construct_model_class_none_not_dumped(field_type_cls, protobuf_msg_cls):
-    class ModelNoneNotDumped(Model):
+    class ModelNoneNotDumped(Model, protobuf_message=protobuf_msg_cls):
         wrapped = field_type_cls()
 
         class Options:
-            _protobuf_class = protobuf_msg_cls
             serialize_when_none = False
 
     return ModelNoneNotDumped
 
 
 def construct_model_class_field_renamed(field_type_cls, protobuf_msg_cls):
-    class ModelFieldRenamed(Model):
+    class ModelFieldRenamed(Model, protobuf_message=protobuf_msg_cls):
         custom_name = field_type_cls(metadata=dict(protobuf_field='wrapped'))
-
-        class Options:
-            _protobuf_class = protobuf_msg_cls
 
     return ModelFieldRenamed
 
 
 def construct_model_class_field_renamed_required(field_type_cls, protobuf_msg_cls):
-    class ModelFieldRenamedRequired(Model):
+    class ModelFieldRenamedRequired(Model, protobuf_message=protobuf_msg_cls):
         custom_name = field_type_cls(
             metadata=dict(protobuf_field='wrapped'),
             required=True,
         )
-
-        class Options:
-            _protobuf_class = protobuf_msg_cls
 
     return ModelFieldRenamedRequired
 
@@ -67,11 +54,8 @@ def construct_model_class_validated(
         protobuf_msg_cls,
         validator_func,
 ):
-    class ModelValidated(Model):
+    class ModelValidated(Model, protobuf_message=protobuf_msg_cls):
         wrapped = field_type_cls(validators=[validator_func])
-
-        class Options:
-            _protobuf_class = protobuf_msg_cls
 
     return ModelValidated
 
@@ -81,14 +65,11 @@ def construct_model_class_field_renamed_validated(
         protobuf_msg_cls,
         validator_func,
 ):
-    class ModelValidated(Model):
+    class ModelValidated(Model, protobuf_message=protobuf_msg_cls):
         custom_name = field_type_cls(
             metadata=dict(protobuf_field='wrapped'),
             validators=[validator_func],
         )
-
-        class Options:
-            _protobuf_class = protobuf_msg_cls
 
     return ModelValidated
 

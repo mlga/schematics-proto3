@@ -23,7 +23,7 @@ class Grade(ProtobufEnum, protobuf_enum=pb2.Grade):
     pass
 
 
-class CourseGrade(Model):
+class CourseGrade(Model, protobuf_message=pb2.Student.CourseGrade):
     """
     Model of a grade, contains course_id and grade.
     """
@@ -33,11 +33,8 @@ class CourseGrade(Model):
         unset_variant=pb2.Grade.UNKNOWN,
     )
 
-    class Options:
-        _protobuf_class = pb2.Student.CourseGrade
 
-
-class StudentModel(Model):
+class StudentModel(Model, protobuf_message=pb2.Student):
     """
     Model of a student.
     """
@@ -46,9 +43,6 @@ class StudentModel(Model):
     grades = pbtypes.RepeatedType(
         pbtypes.MessageType(CourseGrade),
     )
-
-    class Options:
-        _protobuf_class = pb2.Student
 
 
 if __name__ == '__main__':

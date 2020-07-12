@@ -55,26 +55,20 @@ We can declare following ``Model`` classes, which reflect the structure of above
        pass
 
 
-   class CourseGrade(Model):
+   class CourseGrade(Model, protobuf_message=pb2.Student.CourseGrade):
        course_id = types.StringType()
        grade = pbtypes.EnumType(
            Grade,
            unset_variant=pb2.Grade.UNKNOWN,
        )
 
-       class Options:
-           _protobuf_class = pb2.Student.CourseGrade
 
-
-   class StudentModel(Model):
+   class StudentModel(Model, protobuf_message=pb2.Student):
        id = types.IntType()
        name = pbtypes.StringWrapperType()
        grades = pbtypes.RepeatedType(
            pbtypes.MessageType(CourseGrade),
        )
-
-       class Options:
-           _protobuf_class = pb2.Student
 
 And now, we can instantiate ``StudentModel`` class directly from Protobuf message:
 

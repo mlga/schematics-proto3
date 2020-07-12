@@ -40,11 +40,8 @@ def msg_unsets():
 @pytest.fixture
 def model_class_optional():
 
-    class ModelOptional(Model):
+    class ModelOptional(Model, protobuf_message=pb2.SimpleEnum):
         value = types.EnumType(TestEnum, unset_variant=TestEnum.UNKNOWN)
-
-        class Options:
-            _protobuf_class = pb2.SimpleEnum
 
     return ModelOptional
 
@@ -52,11 +49,8 @@ def model_class_optional():
 @pytest.fixture
 def model_class_required():
 
-    class ModelRequired(Model):
+    class ModelRequired(Model, protobuf_message=pb2.SimpleEnum):
         value = types.EnumType(TestEnum, required=True, unset_variant=TestEnum.UNKNOWN)
-
-        class Options:
-            _protobuf_class = pb2.SimpleEnum
 
     return ModelRequired
 
@@ -64,7 +58,7 @@ def model_class_required():
 @pytest.fixture
 def model_class_required_renamed():
 
-    class ModelRequiredRenamed(Model):
+    class ModelRequiredRenamed(Model, protobuf_message=pb2.SimpleEnum):
         custom_value = types.EnumType(
             TestEnum,
             required=True,
@@ -72,20 +66,16 @@ def model_class_required_renamed():
             unset_variant=TestEnum.UNKNOWN,
         )
 
-        class Options:
-            _protobuf_class = pb2.SimpleEnum
-
     return ModelRequiredRenamed
 
 
 @pytest.fixture
 def model_class_none_not_dumped():
 
-    class ModelNoneNotDumped(Model):
+    class ModelNoneNotDumped(Model, protobuf_message=pb2.SimpleEnum):
         value = types.EnumType(TestEnum, unset_variant=TestEnum.UNKNOWN)
 
         class Options:
-            _protobuf_class = pb2.SimpleEnum
             serialize_when_none = False
 
     return ModelNoneNotDumped
@@ -94,15 +84,12 @@ def model_class_none_not_dumped():
 @pytest.fixture
 def model_class_field_renamed():
 
-    class ModelFieldRenamed(Model):
+    class ModelFieldRenamed(Model, protobuf_message=pb2.SimpleEnum):
         custom_value = types.EnumType(
             TestEnum,
             metadata=dict(protobuf_field='value'),
             unset_variant=TestEnum.UNKNOWN,
         )
-
-        class Options:
-            _protobuf_class = pb2.SimpleEnum
 
     return ModelFieldRenamed
 
@@ -112,15 +99,12 @@ def model_class_validated_factory():
     def _factory(validator_func=None):
         outer_validators = [validator_func] if validator_func else []
 
-        class ModelValidated(Model):
+        class ModelValidated(Model, protobuf_message=pb2.SimpleEnum):
             value = types.EnumType(
                 TestEnum,
                 validators=outer_validators,
                 unset_variant=TestEnum.UNKNOWN,
             )
-
-            class Options:
-                _protobuf_class = pb2.SimpleEnum
 
         return ModelValidated
 
@@ -132,16 +116,13 @@ def model_class_validated_renamed_factory():
     def _factory(validator_func=None):
         outer_validators = [validator_func] if validator_func else []
 
-        class ModelValidated(Model):
+        class ModelValidated(Model, protobuf_message=pb2.SimpleEnum):
             custom_value = types.EnumType(
                 TestEnum,
                 validators=outer_validators,
                 metadata=dict(protobuf_field='value'),
                 unset_variant=TestEnum.UNKNOWN,
             )
-
-            class Options:
-                _protobuf_class = pb2.SimpleEnum
 
         return ModelValidated
 

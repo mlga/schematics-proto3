@@ -75,60 +75,44 @@ class CommonPrimitivesTests:
             )
 
     def get_model_class_optional(self):
-        class ModelOptional(Model):
+        class ModelOptional(Model, protobuf_message=self.protobuf_msg_class):
             value = self.field_type_class()
-
-            class Options:
-                _protobuf_class = self.protobuf_msg_class
 
         return ModelOptional
 
     def get_model_class_required(self):
-        class ModelRequired(Model):
+        class ModelRequired(Model, protobuf_message=self.protobuf_msg_class):
             value = self.field_type_class(required=True)
-
-            class Options:
-                _protobuf_class = self.protobuf_msg_class
 
         return ModelRequired
 
     def get_model_class_none_not_dumped(self):
-        class ModelNoneNotDumped(Model):
+        class ModelNoneNotDumped(Model, protobuf_message=self.protobuf_msg_class):
             value = self.field_type_class()
 
             class Options:
-                _protobuf_class = self.protobuf_msg_class
                 serialize_when_none = False
 
         return ModelNoneNotDumped
 
     def get_model_class_renamed(self):
-        class ModelFieldRenamed(Model):
+        class ModelFieldRenamed(Model, protobuf_message=self.protobuf_msg_class):
             custom_name = self.field_type_class(metadata=dict(protobuf_field='value'))
-
-            class Options:
-                _protobuf_class = self.protobuf_msg_class
 
         return ModelFieldRenamed
 
     def get_model_class_validated(self, validator_func):
-        class ModelValidated(Model):
+        class ModelValidated(Model, protobuf_message=self.protobuf_msg_class):
             value = self.field_type_class(validators=[validator_func])
-
-            class Options:
-                _protobuf_class = self.protobuf_msg_class
 
         return ModelValidated
 
     def get_model_class_renamed_validated(self, validator_func):
-        class ModelValidated(Model):
+        class ModelValidated(Model, protobuf_message=self.protobuf_msg_class):
             custom_name = self.field_type_class(
                 metadata=dict(protobuf_field='value'),
                 validators=[validator_func],
             )
-
-            class Options:
-                _protobuf_class = self.protobuf_msg_class
 
         return ModelValidated
 

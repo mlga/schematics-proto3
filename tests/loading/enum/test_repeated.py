@@ -43,13 +43,10 @@ def msg_unsets():
 @pytest.fixture
 def model_class_optional():
 
-    class ModelOptional(Model):
+    class ModelOptional(Model, protobuf_message=pb2.RepeatedEnum):
         value = types.RepeatedType(
             types.EnumType(TestEnum, unset_variant=TestEnum.UNKNOWN),
         )
-
-        class Options:
-            _protobuf_class = pb2.RepeatedEnum
 
     return ModelOptional
 
@@ -57,14 +54,11 @@ def model_class_optional():
 @pytest.fixture
 def model_class_required():
 
-    class ModelRequired(Model):
+    class ModelRequired(Model, protobuf_message=pb2.RepeatedEnum):
         value = types.RepeatedType(
             types.EnumType(TestEnum, unset_variant=TestEnum.UNKNOWN),
             required=True,
         )
-
-        class Options:
-            _protobuf_class = pb2.RepeatedEnum
 
     return ModelRequired
 
@@ -72,15 +66,12 @@ def model_class_required():
 @pytest.fixture
 def model_class_required_renamed():
 
-    class ModelRequiredRenamed(Model):
+    class ModelRequiredRenamed(Model, protobuf_message=pb2.RepeatedEnum):
         custom_value = types.RepeatedType(
             types.EnumType(TestEnum, unset_variant=TestEnum.UNKNOWN),
             required=True,
             metadata=dict(protobuf_field='value'),
         )
-
-        class Options:
-            _protobuf_class = pb2.RepeatedEnum
 
     return ModelRequiredRenamed
 
@@ -88,13 +79,12 @@ def model_class_required_renamed():
 @pytest.fixture
 def model_class_none_not_dumped():
 
-    class ModelNoneNotDumped(Model):
+    class ModelNoneNotDumped(Model, protobuf_message=pb2.RepeatedEnum):
         value = types.RepeatedType(
             types.EnumType(TestEnum, unset_variant=TestEnum.UNKNOWN),
         )
 
         class Options:
-            _protobuf_class = pb2.RepeatedEnum
             serialize_when_none = False
 
     return ModelNoneNotDumped
@@ -103,14 +93,11 @@ def model_class_none_not_dumped():
 @pytest.fixture
 def model_class_field_renamed():
 
-    class ModelFieldRenamed(Model):
+    class ModelFieldRenamed(Model, protobuf_message=pb2.RepeatedEnum):
         custom_value = types.RepeatedType(
             types.EnumType(TestEnum, unset_variant=TestEnum.UNKNOWN),
             metadata=dict(protobuf_field='value'),
         )
-
-        class Options:
-            _protobuf_class = pb2.RepeatedEnum
 
     return ModelFieldRenamed
 
@@ -121,14 +108,11 @@ def model_class_validated_factory():
         outer_validators = [validator_func] if validator_func else []
         inner_validators = [inner_validator_func] if inner_validator_func else []
 
-        class ModelValidated(Model):
+        class ModelValidated(Model, protobuf_message=pb2.RepeatedEnum):
             value = types.RepeatedType(
                 types.EnumType(TestEnum, unset_variant=TestEnum.UNKNOWN, validators=inner_validators),
                 validators=outer_validators,
             )
-
-            class Options:
-                _protobuf_class = pb2.RepeatedEnum
 
         return ModelValidated
 
@@ -141,15 +125,12 @@ def model_class_validated_renamed_factory():
         outer_validators = [validator_func] if validator_func else []
         inner_validators = [inner_validator_func] if inner_validator_func else []
 
-        class ModelValidated(Model):
+        class ModelValidated(Model, protobuf_message=pb2.RepeatedEnum):
             custom_value = types.RepeatedType(
                 types.EnumType(TestEnum, unset_variant=TestEnum.UNKNOWN, validators=inner_validators),
                 validators=outer_validators,
                 metadata=dict(protobuf_field='value'),
             )
-
-            class Options:
-                _protobuf_class = pb2.RepeatedEnum
 
         return ModelValidated
 

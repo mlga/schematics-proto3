@@ -87,12 +87,10 @@ And reflect above message in ``Model`` class.
    import person_pb2 as pb2
 
 
-   class PersonModel(Model):
+   class PersonModel(Model, protobuf_message=pb2.Person):
        name = pbtypes.StringWrapperType()
        website = pbtypes.StringWrapperType()
 
-       class Options:
-           _protobuf_class = pb2.Person
 
 Let's load some data.
 

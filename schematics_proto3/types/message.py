@@ -13,7 +13,7 @@ class MessageType(ProtobufTypeMixin, ModelType):
         # TODO: If instance does not match protobuf msg type but is a
         #       protobuf msg nerveless, raise informative exception.
         # pylint: disable=protected-access
-        if isinstance(value, self.model_class._options.extras['_protobuf_class']):
+        if isinstance(value, self.model_class.protobuf_options.message_class):
             return self.model_class.load_protobuf(value)
 
         return super().convert(value, context)
@@ -27,3 +27,15 @@ class MessageType(ProtobufTypeMixin, ModelType):
         value = getattr(msg, field_name)
 
         return self.model_class.load_protobuf(value)
+
+    def export_protobuf(self, msg, field_name, value):
+        # pylint: disable=no-self-use
+        # TODO: Check that model_class is an instance of Model
+        if field_name is Unset:
+            return
+
+        setattr(
+            msg,
+            field_name,
+            value.to_protobuf(),
+        )

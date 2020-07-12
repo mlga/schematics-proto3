@@ -43,53 +43,38 @@ def msg_unsets():
 @pytest.fixture
 def model_class_optional():
 
-    class ModelOptional(Model):
+    class ModelOptional(Model, protobuf_message=pb2.RepeatedNested):
 
-        class InnerMsgModel(Model):
+        class InnerMsgModel(Model, protobuf_message=pb2.RepeatedNested.Inner):
             value = StringType()
 
-            class Options:
-                _protobuf_class = pb2.RepeatedNested.Inner
-
         inner = types.RepeatedType(types.MessageType(InnerMsgModel))
-
-        class Options:
-            _protobuf_class = pb2.RepeatedNested
 
     return ModelOptional
 
 
 @pytest.fixture
 def model_class_required():
-    class ModelRequired(Model):
-        class InnerMsgModel(Model):
+    class ModelRequired(Model, protobuf_message=pb2.Nested):
+        class InnerMsgModel(Model, protobuf_message=pb2.Nested.Inner):
             value = StringType(required=True)
-
-            class Options:
-                _protobuf_class = pb2.Nested.Inner
 
         inner = types.RepeatedType(
             types.MessageType(InnerMsgModel),
             required=True,
         )
 
-        class Options:
-            _protobuf_class = pb2.RepeatedNested
-
     return ModelRequired
 
 
 @pytest.fixture
 def model_class_required_renamed():
-    class ModelRequired(Model):
-        class InnerMsgModel(Model):
+    class ModelRequired(Model, protobuf_message=pb2.Nested):
+        class InnerMsgModel(Model, protobuf_message=pb2.Nested.Inner):
             custom_value = StringType(
                 required=True,
                 metadata=dict(protobuf_field='value'),
             )
-
-            class Options:
-                _protobuf_class = pb2.Nested.Inner
 
         custom_inner = types.RepeatedType(
             types.MessageType(InnerMsgModel),
@@ -97,27 +82,20 @@ def model_class_required_renamed():
             metadata=dict(protobuf_field='inner'),
         )
 
-        class Options:
-            _protobuf_class = pb2.RepeatedNested
-
     return ModelRequired
 
 
 @pytest.fixture
 def model_class_none_not_dumped():
 
-    class ModelNoneNotDumped(Model):
+    class ModelNoneNotDumped(Model, protobuf_message=pb2.RepeatedNested):
 
-        class InnerMsgModel(Model):
+        class InnerMsgModel(Model, protobuf_message=pb2.RepeatedNested.Inner):
             value = StringType()
-
-            class Options:
-                _protobuf_class = pb2.RepeatedNested.Inner
 
         inner = types.RepeatedType(types.MessageType(InnerMsgModel))
 
         class Options:
-            _protobuf_class = pb2.RepeatedNested
             serialize_when_none = False
 
     return ModelNoneNotDumped
@@ -126,21 +104,15 @@ def model_class_none_not_dumped():
 @pytest.fixture
 def model_class_field_renamed():
 
-    class ModelFieldRenamed(Model):
+    class ModelFieldRenamed(Model, protobuf_message=pb2.RepeatedNested):
 
-        class InnerMsgModel(Model):
+        class InnerMsgModel(Model, protobuf_message=pb2.RepeatedNested.Inner):
             custom_value = StringType(metadata=dict(protobuf_field='value'))
-
-            class Options:
-                _protobuf_class = pb2.RepeatedNested.Inner
 
         custom_inner = types.RepeatedType(
             types.MessageType(InnerMsgModel),
             metadata=dict(protobuf_field='inner'),
         )
-
-        class Options:
-            _protobuf_class = pb2.RepeatedNested
 
     return ModelFieldRenamed
 
@@ -151,21 +123,15 @@ def model_class_validated_factory():
         outer_validators = [validator_func] if validator_func else []
         inner_validators = [inner_validator_func] if inner_validator_func else []
 
-        class ModelValidated(Model):
+        class ModelValidated(Model, protobuf_message=pb2.RepeatedNested):
 
-            class InnerMsgModel(Model):
+            class InnerMsgModel(Model, protobuf_message=pb2.RepeatedNested.Inner):
                 value = StringType(validators=inner_validators)
-
-                class Options:
-                    _protobuf_class = pb2.RepeatedNested.Inner
 
             inner = types.RepeatedType(
                 types.MessageType(InnerMsgModel),
                 validators=outer_validators,
             )
-
-            class Options:
-                _protobuf_class = pb2.RepeatedNested
 
         return ModelValidated
 
@@ -178,25 +144,19 @@ def model_class_validated_renamed_factory():
         outer_validators = [validator_func] if validator_func else []
         inner_validators = [inner_validator_func] if inner_validator_func else []
 
-        class ModelValidated(Model):
+        class ModelValidated(Model, protobuf_message=pb2.RepeatedNested):
 
-            class InnerMsgModel(Model):
+            class InnerMsgModel(Model, protobuf_message=pb2.RepeatedNested.Inner):
                 custom_value = StringType(
                     validators=inner_validators,
                     metadata=dict(protobuf_field='value'),
                 )
-
-                class Options:
-                    _protobuf_class = pb2.RepeatedNested.Inner
 
             custom_inner = types.RepeatedType(
                 types.MessageType(InnerMsgModel),
                 validators=outer_validators,
                 metadata=dict(protobuf_field='inner'),
             )
-
-            class Options:
-                _protobuf_class = pb2.RepeatedNested
 
         return ModelValidated
 
