@@ -3,7 +3,7 @@ name: Build
 on: [push]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
     strategy:
@@ -35,3 +35,22 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
         file: ./coverage.xml
         fail_ci_if_error: true
+
+  release:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+    strategy:
+      max-parallel: 1
+      matrix:
+        python-version: [3.7]
+
+    steps:
+    - name: Install build tools
+      run: pip install twine wheel
+    - name: Package build
+      run: python setup.py sdist bdist_wheel
+    - name: PyPi Publish
+      uses: pypa/gh-action-pypi-publish@master
+      with:
+        user: __token__
+        password: ${{ secrets.pypi_password }}
