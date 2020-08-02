@@ -7,7 +7,7 @@ from schematics.undefined import Undefined
 from schematics_proto3.oneof import OneOfVariant
 from schematics_proto3.types.base import ProtobufTypeMixin
 from schematics_proto3.unset import Unset
-from schematics_proto3.utils import get_value_fallback
+from schematics_proto3.utils import get_value_fallback, set_value_fallback
 
 __all__ = ['OneOfType']
 
@@ -25,6 +25,7 @@ class OneOfType(ProtobufTypeMixin, CompoundType):
         self._variant = None
         self._variant_type = None
         self._protobuf_renames = {}
+        self._default = Unset
 
         for name, spec in variants_spec.items():
             pb_name = spec.metadata.get('protobuf_field', None)
@@ -122,7 +123,7 @@ class OneOfType(ProtobufTypeMixin, CompoundType):
         return value
 
     def export(self, value, format, context):  # pylint:disable=redefined-builtin
-        if value is Unset:
+        if value in {Unset, None}:
             export_level = self.get_export_level(context)
 
             if export_level <= NOT_NONE:
@@ -158,10 +159,11 @@ class OneOfType(ProtobufTypeMixin, CompoundType):
 
         return convert_func(msg, variant_name, field_names)
 
-    def export_protobuf(self, msg, field_name, value):
+    def export_protobuf(self, msg, field_name, value):  # pylint: disable=unused-argument
         # TODO: Check that model_class is an instance of Model
-        if field_name is Unset:
+        if value in {Unset, None}:
             return
 
-        self.variant = field_name
-        self.variant_type.export_protobuf(msg, field_name, value)
+        # self.variant = field_name
+        set_value = getattr(self.variant_type, 'export_protobuf', set_value_fallback)
+        set_value(msg, self.variant, value.value)
