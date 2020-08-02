@@ -5,8 +5,8 @@ from typing import Type
 import schematics
 from google.protobuf.message import Message
 
-from schematics_proto3.types.base import ProtobufTypeMixin
-from schematics_proto3.unset import Unset
+from schematics_proto3.types import OneOfType
+from schematics_proto3.types.wrappers import WrapperTypeMixin
 from schematics_proto3.utils import get_value_fallback
 
 
@@ -75,18 +75,24 @@ class Model(schematics.Model, metaclass=ModelMeta, protobuf_message=_Ignore):
         for name, field in self.fields.items():
             pb_name = field.metadata.get('protobuf_field', name)
 
-            if isinstance(field, ProtobufTypeMixin):
+            if isinstance(field, WrapperTypeMixin):
                 # This is a wrapped value, assign it iff not Unset.
                 val = getattr(self, name)
-                if val is not Unset:
-                    wrapper = getattr(msg, pb_name)
-                    wrapper.value = val
+                field.export_protobuf(msg, pb_name, val)
             elif isinstance(field, Model):
                 # Compound, nested field, delegate serialisation to model
                 # instance.
                 setattr(msg, pb_name, field.to_protobuf())
+            elif isinstance(field, OneOfType):
+                val = getattr(self, name)
+                field.export_protobuf(msg, pb_name, val)
             else:
                 # Primitive value, just assign it.
-                setattr(msg, pb_name, getattr(self, name))
+                val = getattr(self, name)
+                if val is not None:
+                    setattr(msg, pb_name, val)
 
         return msg
+
+    def __hash__(self):
+        return hash(tuple(field for field in self.fields))

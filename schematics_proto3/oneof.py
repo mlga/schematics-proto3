@@ -19,3 +19,6 @@ class OneOfVariant:
 
     def __repr__(self):
         return f'OneOfVariant<{self.variant}, {self.value}>'
+
+    def __hash__(self):
+        return hash((self.variant, self.value))

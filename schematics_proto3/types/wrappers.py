@@ -26,7 +26,7 @@ class WrapperTypeMixin(ProtobufTypeMixin):
     def export_protobuf(self, msg, field_name, value):
         # pylint: disable=no-self-use
         # TODO: Check that model_class is an instance of Model
-        if field_name is Unset:
+        if value is Unset or value is None:
             return
 
         field = getattr(msg, field_name)
