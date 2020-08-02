@@ -6,6 +6,7 @@ of [Schematics](https://schematics.readthedocs.io>) to Protobuf 3 world.
 ![Build](https://github.com/mlga/schematics-proto3/workflows/Build/badge.svg)
 [![codecov](https://codecov.io/gh/mlga/schematics-proto3/branch/master/graph/badge.svg)](https://codecov.io/gh/mlga/schematics-proto3)
 [![Documentation Status](https://readthedocs.org/projects/schematics-proto3/badge/?version=latest)](https://schematics-proto3.readthedocs.io/en/latest/?badge=latest)
+[![PyPI version](https://badge.fury.io/py/schematics-proto3.svg)](https://badge.fury.io/py/schematics-proto3)
 
 ## Caution
 Library is currently in **WORK IN PROGRESS** state.
