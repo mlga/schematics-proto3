@@ -15,7 +15,7 @@ What is implemented and tested:
 
 1. Loading Protobuf 3 messages to Model instances.
    * for most of the Protobuf 3 types, including
-    `wrappers <https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/wrappers.proto>`_, ``repeated`` ``oneof`` fields
+    [wrappers](https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/wrappers.proto), ``repeated`` ``oneof`` fields
    * Enum type
 1. Validation and structured error messages.
 
@@ -55,7 +55,7 @@ complex gRPC services might reveal a number of deficiencies in available tooling
 
 Example
 =======
-Let's take [Schematics example]<https://schematics.readthedocs.io/en/latest/#example>) and modify it to work with Protobuf.
+Let's take [Schematics example](https://schematics.readthedocs.io/en/latest/#example) and modify it to work with Protobuf.
 
 We have a following Protobuf message (and ``person_pb2`` Python module).
 
