@@ -28,12 +28,26 @@ jobs:
     - name: Test
       run: |
         python setup.py pytest
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
+    - name: Upload coverage artifact
+      uses: actions/upload-artifact@v2
       with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./coverage.xml
-        fail_ci_if_error: true
+        name: coverage
+        path: ./coverage.xml
+
+  coverage:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+     - name: Download coverage
+       uses: actions/download-artifact@v2
+       with:
+         name: coverage
+     - name: Upload coverage to Codecov
+     uses: codecov/codecov-action@v1
+     with:
+       token: ${{ secrets.CODECOV_TOKEN }}
+       file: ./coverage.xml
+       fail_ci_if_error: true
 
   release:
     runs-on: ubuntu-latest
