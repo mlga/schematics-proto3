@@ -2,6 +2,7 @@
 import os
 import random
 
+from google.protobuf import wrappers_pb2
 from schematics.exceptions import ValidationError
 from schematics.types import IntType, FloatType, BooleanType, StringType, BaseType
 
@@ -12,7 +13,30 @@ __all__ = ['IntWrapperType', 'FloatWrapperType', 'BoolWrapperType',
            'StringWrapperType', 'BytesWrapperType']
 
 
+WRAPPER_TYPES = (
+    wrappers_pb2.Int32Value,
+    wrappers_pb2.Int64Value,
+    wrappers_pb2.BytesValue,
+    wrappers_pb2.StringValue,
+    wrappers_pb2.BoolValue,
+    wrappers_pb2.UInt32Value,
+    wrappers_pb2.UInt64Value,
+    wrappers_pb2.FloatValue,
+    wrappers_pb2.DoubleValue,
+)
+
+
 class WrapperTypeMixin(ProtobufTypeMixin):
+
+    def convert(self, value, context):
+        if value is Unset:
+            return Unset
+
+        # TODO: Is is avoidable to use this?
+        if isinstance(value, WRAPPER_TYPES):
+            value = value.value
+
+        return super().convert(value, context)
 
     def convert_protobuf(self, msg, field_name, field_names):
         # pylint: disable=no-self-use
