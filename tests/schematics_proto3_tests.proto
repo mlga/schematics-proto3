@@ -115,6 +115,10 @@ message RepeatedNested {
   repeated Inner inner = 1;
 }
 
+message RepeatedWrapped {
+  repeated google.protobuf.Int32Value value = 1;
+}
+
 /*
  * Messages for oneof tests.
  */

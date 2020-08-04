@@ -23,7 +23,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='schematics_proto3.tests',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n#tests/schematics_proto3_tests.proto\x12\x17schematics_proto3.tests\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\"e\n\x06Nested\x12\x34\n\x05inner\x18\x01 \x01(\x0b\x32%.schematics_proto3.tests.Nested.Inner\x12\r\n\x05other\x18\x02 \x01(\t\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\t\">\n\rWrappedDouble\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\"<\n\x0cWrappedFloat\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.FloatValue\"<\n\x0cWrappedInt64\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\">\n\rWrappedUInt64\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt64Value\"<\n\x0cWrappedInt32\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\">\n\rWrappedUInt32\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\":\n\x0bWrappedBool\x12+\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\">\n\rWrappedString\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"<\n\x0cWrappedBytes\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.BytesValue\"\x17\n\x06\x44ouble\x12\r\n\x05value\x18\x01 \x01(\x01\"\x16\n\x05\x46loat\x12\r\n\x05value\x18\x01 \x01(\x02\"\x16\n\x05Int64\x12\r\n\x05value\x18\x01 \x01(\x03\"\x17\n\x06UInt64\x12\r\n\x05value\x18\x01 \x01(\x04\"\x16\n\x05Int32\x12\r\n\x05value\x18\x01 \x01(\x05\"\x17\n\x06UInt32\x12\r\n\x05value\x18\x01 \x01(\r\"\x15\n\x04\x42ool\x12\r\n\x05value\x18\x01 \x01(\x08\"\x17\n\x06String\x12\r\n\x05value\x18\x01 \x01(\t\"\x16\n\x05\x42ytes\x12\r\n\x05value\x18\x01 \x01(\x0c\"\"\n\x11RepeatedPrimitive\x12\r\n\x05value\x18\x01 \x03(\t\"f\n\x0eRepeatedNested\x12<\n\x05inner\x18\x01 \x03(\x0b\x32-.schematics_proto3.tests.RepeatedNested.Inner\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\t\"=\n\x0eOneOfPrimitive\x12\x10\n\x06value1\x18\x01 \x01(\x04H\x00\x12\x10\n\x06value2\x18\x02 \x01(\tH\x00\x42\x07\n\x05inner\"\x9c\x01\n\x0bOneOfNested\x12<\n\x06value1\x18\x01 \x01(\x0b\x32*.schematics_proto3.tests.OneOfNested.InnerH\x00\x12.\n\x06value2\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValueH\x00\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\tB\x07\n\x05inner\":\n\nSimpleEnum\x12,\n\x05value\x18\x01 \x01(\x0e\x32\x1d.schematics_proto3.tests.Enum\"<\n\x0cRepeatedEnum\x12,\n\x05value\x18\x01 \x03(\x0e\x32\x1d.schematics_proto3.tests.Enum\"u\n\tOneOfEnum\x12.\n\x06value1\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValueH\x00\x12/\n\x06value2\x18\x02 \x01(\x0e\x32\x1d.schematics_proto3.tests.EnumH\x00\x42\x07\n\x05inner**\n\x04\x45num\x12\x0b\n\x07UNKNOWN\x10\x00\x12\t\n\x05\x46IRST\x10\x01\x12\n\n\x06SECOND\x10\x02\x62\x06proto3')
+  serialized_pb=_b('\n#tests/schematics_proto3_tests.proto\x12\x17schematics_proto3.tests\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\"e\n\x06Nested\x12\x34\n\x05inner\x18\x01 \x01(\x0b\x32%.schematics_proto3.tests.Nested.Inner\x12\r\n\x05other\x18\x02 \x01(\t\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\t\">\n\rWrappedDouble\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\"<\n\x0cWrappedFloat\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.FloatValue\"<\n\x0cWrappedInt64\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\">\n\rWrappedUInt64\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt64Value\"<\n\x0cWrappedInt32\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\">\n\rWrappedUInt32\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\":\n\x0bWrappedBool\x12+\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\">\n\rWrappedString\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"<\n\x0cWrappedBytes\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.BytesValue\"\x17\n\x06\x44ouble\x12\r\n\x05value\x18\x01 \x01(\x01\"\x16\n\x05\x46loat\x12\r\n\x05value\x18\x01 \x01(\x02\"\x16\n\x05Int64\x12\r\n\x05value\x18\x01 \x01(\x03\"\x17\n\x06UInt64\x12\r\n\x05value\x18\x01 \x01(\x04\"\x16\n\x05Int32\x12\r\n\x05value\x18\x01 \x01(\x05\"\x17\n\x06UInt32\x12\r\n\x05value\x18\x01 \x01(\r\"\x15\n\x04\x42ool\x12\r\n\x05value\x18\x01 \x01(\x08\"\x17\n\x06String\x12\r\n\x05value\x18\x01 \x01(\t\"\x16\n\x05\x42ytes\x12\r\n\x05value\x18\x01 \x01(\x0c\"\"\n\x11RepeatedPrimitive\x12\r\n\x05value\x18\x01 \x03(\t\"f\n\x0eRepeatedNested\x12<\n\x05inner\x18\x01 \x03(\x0b\x32-.schematics_proto3.tests.RepeatedNested.Inner\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\t\"=\n\x0fRepeatedWrapped\x12*\n\x05value\x18\x01 \x03(\x0b\x32\x1b.google.protobuf.Int32Value\"=\n\x0eOneOfPrimitive\x12\x10\n\x06value1\x18\x01 \x01(\x04H\x00\x12\x10\n\x06value2\x18\x02 \x01(\tH\x00\x42\x07\n\x05inner\"\x9c\x01\n\x0bOneOfNested\x12<\n\x06value1\x18\x01 \x01(\x0b\x32*.schematics_proto3.tests.OneOfNested.InnerH\x00\x12.\n\x06value2\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValueH\x00\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\tB\x07\n\x05inner\":\n\nSimpleEnum\x12,\n\x05value\x18\x01 \x01(\x0e\x32\x1d.schematics_proto3.tests.Enum\"<\n\x0cRepeatedEnum\x12,\n\x05value\x18\x01 \x03(\x0e\x32\x1d.schematics_proto3.tests.Enum\"u\n\tOneOfEnum\x12.\n\x06value1\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValueH\x00\x12/\n\x06value2\x18\x02 \x01(\x0e\x32\x1d.schematics_proto3.tests.EnumH\x00\x42\x07\n\x05inner**\n\x04\x45num\x12\x0b\n\x07UNKNOWN\x10\x00\x12\t\n\x05\x46IRST\x10\x01\x12\n\n\x06SECOND\x10\x02\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -48,8 +48,8 @@ _ENUM = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1618,
-  serialized_end=1660,
+  serialized_start=1681,
+  serialized_end=1723,
 )
 _sym_db.RegisterEnumDescriptor(_ENUM)
 
@@ -778,6 +778,37 @@ _REPEATEDNESTED = _descriptor.Descriptor(
 )
 
 
+_REPEATEDWRAPPED = _descriptor.Descriptor(
+  name='RepeatedWrapped',
+  full_name='schematics_proto3.tests.RepeatedWrapped',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='value', full_name='schematics_proto3.tests.RepeatedWrapped.value', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1155,
+  serialized_end=1216,
+)
+
+
 _ONEOFPRIMITIVE = _descriptor.Descriptor(
   name='OneOfPrimitive',
   full_name='schematics_proto3.tests.OneOfPrimitive',
@@ -814,8 +845,8 @@ _ONEOFPRIMITIVE = _descriptor.Descriptor(
       name='inner', full_name='schematics_proto3.tests.OneOfPrimitive.inner',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=1155,
-  serialized_end=1216,
+  serialized_start=1218,
+  serialized_end=1279,
 )
 
 
@@ -885,8 +916,8 @@ _ONEOFNESTED = _descriptor.Descriptor(
       name='inner', full_name='schematics_proto3.tests.OneOfNested.inner',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=1219,
-  serialized_end=1375,
+  serialized_start=1282,
+  serialized_end=1438,
 )
 
 
@@ -916,8 +947,8 @@ _SIMPLEENUM = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1377,
-  serialized_end=1435,
+  serialized_start=1440,
+  serialized_end=1498,
 )
 
 
@@ -947,8 +978,8 @@ _REPEATEDENUM = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1437,
-  serialized_end=1497,
+  serialized_start=1500,
+  serialized_end=1560,
 )
 
 
@@ -988,8 +1019,8 @@ _ONEOFENUM = _descriptor.Descriptor(
       name='inner', full_name='schematics_proto3.tests.OneOfEnum.inner',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=1499,
-  serialized_end=1616,
+  serialized_start=1562,
+  serialized_end=1679,
 )
 
 _NESTED_INNER.containing_type = _NESTED
@@ -1005,6 +1036,7 @@ _WRAPPEDSTRING.fields_by_name['wrapped'].message_type = google_dot_protobuf_dot_
 _WRAPPEDBYTES.fields_by_name['wrapped'].message_type = google_dot_protobuf_dot_wrappers__pb2._BYTESVALUE
 _REPEATEDNESTED_INNER.containing_type = _REPEATEDNESTED
 _REPEATEDNESTED.fields_by_name['inner'].message_type = _REPEATEDNESTED_INNER
+_REPEATEDWRAPPED.fields_by_name['value'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT32VALUE
 _ONEOFPRIMITIVE.oneofs_by_name['inner'].fields.append(
   _ONEOFPRIMITIVE.fields_by_name['value1'])
 _ONEOFPRIMITIVE.fields_by_name['value1'].containing_oneof = _ONEOFPRIMITIVE.oneofs_by_name['inner']
@@ -1051,6 +1083,7 @@ DESCRIPTOR.message_types_by_name['String'] = _STRING
 DESCRIPTOR.message_types_by_name['Bytes'] = _BYTES
 DESCRIPTOR.message_types_by_name['RepeatedPrimitive'] = _REPEATEDPRIMITIVE
 DESCRIPTOR.message_types_by_name['RepeatedNested'] = _REPEATEDNESTED
+DESCRIPTOR.message_types_by_name['RepeatedWrapped'] = _REPEATEDWRAPPED
 DESCRIPTOR.message_types_by_name['OneOfPrimitive'] = _ONEOFPRIMITIVE
 DESCRIPTOR.message_types_by_name['OneOfNested'] = _ONEOFNESTED
 DESCRIPTOR.message_types_by_name['SimpleEnum'] = _SIMPLEENUM
@@ -1221,6 +1254,13 @@ RepeatedNested = _reflection.GeneratedProtocolMessageType('RepeatedNested', (_me
   ))
 _sym_db.RegisterMessage(RepeatedNested)
 _sym_db.RegisterMessage(RepeatedNested.Inner)
+
+RepeatedWrapped = _reflection.GeneratedProtocolMessageType('RepeatedWrapped', (_message.Message,), dict(
+  DESCRIPTOR = _REPEATEDWRAPPED,
+  __module__ = 'tests.schematics_proto3_tests_pb2'
+  # @@protoc_insertion_point(class_scope:schematics_proto3.tests.RepeatedWrapped)
+  ))
+_sym_db.RegisterMessage(RepeatedWrapped)
 
 OneOfPrimitive = _reflection.GeneratedProtocolMessageType('OneOfPrimitive', (_message.Message,), dict(
   DESCRIPTOR = _ONEOFPRIMITIVE,
