@@ -21,8 +21,6 @@ message Nested {
 /*
  * Messages for wrappers tests.
  * https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/unittest_well_known_types.proto
- *
- * TODO: Add google.protobuf.Timestamp case (possibly custom type?).
  */
 message WrappedDouble {
   google.protobuf.DoubleValue wrapped = 1;
@@ -60,6 +58,23 @@ message WrappedBytes {
   google.protobuf.BytesValue wrapped = 1;
 }
 
+/*
+ * Messages for timestamp tests.
+ */
+message Timestamp {
+  google.protobuf.Timestamp value = 1;
+}
+
+message RepeatedTimestamp {
+  repeated google.protobuf.Timestamp value = 1;
+}
+
+message OneOfTimestamp {
+  oneof inner {
+    google.protobuf.StringValue value1 = 1;
+    google.protobuf.Timestamp value2 = 2;
+  }
+}
 
 /*
  * Messages for primitives tests.
