@@ -23,7 +23,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='schematics_proto3.tests',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n#tests/schematics_proto3_tests.proto\x12\x17schematics_proto3.tests\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\"e\n\x06Nested\x12\x34\n\x05inner\x18\x01 \x01(\x0b\x32%.schematics_proto3.tests.Nested.Inner\x12\r\n\x05other\x18\x02 \x01(\t\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\t\">\n\rWrappedDouble\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\"<\n\x0cWrappedFloat\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.FloatValue\"<\n\x0cWrappedInt64\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\">\n\rWrappedUInt64\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt64Value\"<\n\x0cWrappedInt32\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\">\n\rWrappedUInt32\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\":\n\x0bWrappedBool\x12+\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\">\n\rWrappedString\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"<\n\x0cWrappedBytes\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.BytesValue\"\x17\n\x06\x44ouble\x12\r\n\x05value\x18\x01 \x01(\x01\"\x16\n\x05\x46loat\x12\r\n\x05value\x18\x01 \x01(\x02\"\x16\n\x05Int64\x12\r\n\x05value\x18\x01 \x01(\x03\"\x17\n\x06UInt64\x12\r\n\x05value\x18\x01 \x01(\x04\"\x16\n\x05Int32\x12\r\n\x05value\x18\x01 \x01(\x05\"\x17\n\x06UInt32\x12\r\n\x05value\x18\x01 \x01(\r\"\x15\n\x04\x42ool\x12\r\n\x05value\x18\x01 \x01(\x08\"\x17\n\x06String\x12\r\n\x05value\x18\x01 \x01(\t\"\x16\n\x05\x42ytes\x12\r\n\x05value\x18\x01 \x01(\x0c\"\"\n\x11RepeatedPrimitive\x12\r\n\x05value\x18\x01 \x03(\t\"f\n\x0eRepeatedNested\x12<\n\x05inner\x18\x01 \x03(\x0b\x32-.schematics_proto3.tests.RepeatedNested.Inner\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\t\"=\n\x0fRepeatedWrapped\x12*\n\x05value\x18\x01 \x03(\x0b\x32\x1b.google.protobuf.Int32Value\"=\n\x0eOneOfPrimitive\x12\x10\n\x06value1\x18\x01 \x01(\x04H\x00\x12\x10\n\x06value2\x18\x02 \x01(\tH\x00\x42\x07\n\x05inner\"\x9c\x01\n\x0bOneOfNested\x12<\n\x06value1\x18\x01 \x01(\x0b\x32*.schematics_proto3.tests.OneOfNested.InnerH\x00\x12.\n\x06value2\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValueH\x00\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\tB\x07\n\x05inner\":\n\nSimpleEnum\x12,\n\x05value\x18\x01 \x01(\x0e\x32\x1d.schematics_proto3.tests.Enum\"<\n\x0cRepeatedEnum\x12,\n\x05value\x18\x01 \x03(\x0e\x32\x1d.schematics_proto3.tests.Enum\"u\n\tOneOfEnum\x12.\n\x06value1\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValueH\x00\x12/\n\x06value2\x18\x02 \x01(\x0e\x32\x1d.schematics_proto3.tests.EnumH\x00\x42\x07\n\x05inner**\n\x04\x45num\x12\x0b\n\x07UNKNOWN\x10\x00\x12\t\n\x05\x46IRST\x10\x01\x12\n\n\x06SECOND\x10\x02\x62\x06proto3')
+  serialized_pb=_b('\n#tests/schematics_proto3_tests.proto\x12\x17schematics_proto3.tests\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\"e\n\x06Nested\x12\x34\n\x05inner\x18\x01 \x01(\x0b\x32%.schematics_proto3.tests.Nested.Inner\x12\r\n\x05other\x18\x02 \x01(\t\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\t\">\n\rWrappedDouble\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\"<\n\x0cWrappedFloat\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.FloatValue\"<\n\x0cWrappedInt64\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\">\n\rWrappedUInt64\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt64Value\"<\n\x0cWrappedInt32\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\">\n\rWrappedUInt32\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.UInt32Value\":\n\x0bWrappedBool\x12+\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\">\n\rWrappedString\x12-\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"<\n\x0cWrappedBytes\x12,\n\x07wrapped\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.BytesValue\"6\n\tTimestamp\x12)\n\x05value\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\">\n\x11RepeatedTimestamp\x12)\n\x05value\x18\x01 \x03(\x0b\x32\x1a.google.protobuf.Timestamp\"w\n\x0eOneOfTimestamp\x12.\n\x06value1\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValueH\x00\x12,\n\x06value2\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x00\x42\x07\n\x05inner\"\x17\n\x06\x44ouble\x12\r\n\x05value\x18\x01 \x01(\x01\"\x16\n\x05\x46loat\x12\r\n\x05value\x18\x01 \x01(\x02\"\x16\n\x05Int64\x12\r\n\x05value\x18\x01 \x01(\x03\"\x17\n\x06UInt64\x12\r\n\x05value\x18\x01 \x01(\x04\"\x16\n\x05Int32\x12\r\n\x05value\x18\x01 \x01(\x05\"\x17\n\x06UInt32\x12\r\n\x05value\x18\x01 \x01(\r\"\x15\n\x04\x42ool\x12\r\n\x05value\x18\x01 \x01(\x08\"\x17\n\x06String\x12\r\n\x05value\x18\x01 \x01(\t\"\x16\n\x05\x42ytes\x12\r\n\x05value\x18\x01 \x01(\x0c\"\"\n\x11RepeatedPrimitive\x12\r\n\x05value\x18\x01 \x03(\t\"f\n\x0eRepeatedNested\x12<\n\x05inner\x18\x01 \x03(\x0b\x32-.schematics_proto3.tests.RepeatedNested.Inner\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\t\"=\n\x0fRepeatedWrapped\x12*\n\x05value\x18\x01 \x03(\x0b\x32\x1b.google.protobuf.Int32Value\"=\n\x0eOneOfPrimitive\x12\x10\n\x06value1\x18\x01 \x01(\x04H\x00\x12\x10\n\x06value2\x18\x02 \x01(\tH\x00\x42\x07\n\x05inner\"\x9c\x01\n\x0bOneOfNested\x12<\n\x06value1\x18\x01 \x01(\x0b\x32*.schematics_proto3.tests.OneOfNested.InnerH\x00\x12.\n\x06value2\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValueH\x00\x1a\x16\n\x05Inner\x12\r\n\x05value\x18\x01 \x01(\tB\x07\n\x05inner\":\n\nSimpleEnum\x12,\n\x05value\x18\x01 \x01(\x0e\x32\x1d.schematics_proto3.tests.Enum\"<\n\x0cRepeatedEnum\x12,\n\x05value\x18\x01 \x03(\x0e\x32\x1d.schematics_proto3.tests.Enum\"u\n\tOneOfEnum\x12.\n\x06value1\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValueH\x00\x12/\n\x06value2\x18\x02 \x01(\x0e\x32\x1d.schematics_proto3.tests.EnumH\x00\x42\x07\n\x05inner**\n\x04\x45num\x12\x0b\n\x07UNKNOWN\x10\x00\x12\t\n\x05\x46IRST\x10\x01\x12\n\n\x06SECOND\x10\x02\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -48,8 +48,8 @@ _ENUM = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1681,
-  serialized_end=1723,
+  serialized_start=1922,
+  serialized_end=1964,
 )
 _sym_db.RegisterEnumDescriptor(_ENUM)
 
@@ -407,6 +407,109 @@ _WRAPPEDBYTES = _descriptor.Descriptor(
 )
 
 
+_TIMESTAMP = _descriptor.Descriptor(
+  name='Timestamp',
+  full_name='schematics_proto3.tests.Timestamp',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='value', full_name='schematics_proto3.tests.Timestamp.value', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=796,
+  serialized_end=850,
+)
+
+
+_REPEATEDTIMESTAMP = _descriptor.Descriptor(
+  name='RepeatedTimestamp',
+  full_name='schematics_proto3.tests.RepeatedTimestamp',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='value', full_name='schematics_proto3.tests.RepeatedTimestamp.value', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=852,
+  serialized_end=914,
+)
+
+
+_ONEOFTIMESTAMP = _descriptor.Descriptor(
+  name='OneOfTimestamp',
+  full_name='schematics_proto3.tests.OneOfTimestamp',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='value1', full_name='schematics_proto3.tests.OneOfTimestamp.value1', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value2', full_name='schematics_proto3.tests.OneOfTimestamp.value2', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='inner', full_name='schematics_proto3.tests.OneOfTimestamp.inner',
+      index=0, containing_type=None, fields=[]),
+  ],
+  serialized_start=916,
+  serialized_end=1035,
+)
+
+
 _DOUBLE = _descriptor.Descriptor(
   name='Double',
   full_name='schematics_proto3.tests.Double',
@@ -433,8 +536,8 @@ _DOUBLE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=796,
-  serialized_end=819,
+  serialized_start=1037,
+  serialized_end=1060,
 )
 
 
@@ -464,8 +567,8 @@ _FLOAT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=821,
-  serialized_end=843,
+  serialized_start=1062,
+  serialized_end=1084,
 )
 
 
@@ -495,8 +598,8 @@ _INT64 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=845,
-  serialized_end=867,
+  serialized_start=1086,
+  serialized_end=1108,
 )
 
 
@@ -526,8 +629,8 @@ _UINT64 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=869,
-  serialized_end=892,
+  serialized_start=1110,
+  serialized_end=1133,
 )
 
 
@@ -557,8 +660,8 @@ _INT32 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=894,
-  serialized_end=916,
+  serialized_start=1135,
+  serialized_end=1157,
 )
 
 
@@ -588,8 +691,8 @@ _UINT32 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=918,
-  serialized_end=941,
+  serialized_start=1159,
+  serialized_end=1182,
 )
 
 
@@ -619,8 +722,8 @@ _BOOL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=943,
-  serialized_end=964,
+  serialized_start=1184,
+  serialized_end=1205,
 )
 
 
@@ -650,8 +753,8 @@ _STRING = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=966,
-  serialized_end=989,
+  serialized_start=1207,
+  serialized_end=1230,
 )
 
 
@@ -681,8 +784,8 @@ _BYTES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=991,
-  serialized_end=1013,
+  serialized_start=1232,
+  serialized_end=1254,
 )
 
 
@@ -712,8 +815,8 @@ _REPEATEDPRIMITIVE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1015,
-  serialized_end=1049,
+  serialized_start=1256,
+  serialized_end=1290,
 )
 
 
@@ -773,8 +876,8 @@ _REPEATEDNESTED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1051,
-  serialized_end=1153,
+  serialized_start=1292,
+  serialized_end=1394,
 )
 
 
@@ -804,8 +907,8 @@ _REPEATEDWRAPPED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1155,
-  serialized_end=1216,
+  serialized_start=1396,
+  serialized_end=1457,
 )
 
 
@@ -845,8 +948,8 @@ _ONEOFPRIMITIVE = _descriptor.Descriptor(
       name='inner', full_name='schematics_proto3.tests.OneOfPrimitive.inner',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=1218,
-  serialized_end=1279,
+  serialized_start=1459,
+  serialized_end=1520,
 )
 
 
@@ -916,8 +1019,8 @@ _ONEOFNESTED = _descriptor.Descriptor(
       name='inner', full_name='schematics_proto3.tests.OneOfNested.inner',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=1282,
-  serialized_end=1438,
+  serialized_start=1523,
+  serialized_end=1679,
 )
 
 
@@ -947,8 +1050,8 @@ _SIMPLEENUM = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1440,
-  serialized_end=1498,
+  serialized_start=1681,
+  serialized_end=1739,
 )
 
 
@@ -978,8 +1081,8 @@ _REPEATEDENUM = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1500,
-  serialized_end=1560,
+  serialized_start=1741,
+  serialized_end=1801,
 )
 
 
@@ -1019,8 +1122,8 @@ _ONEOFENUM = _descriptor.Descriptor(
       name='inner', full_name='schematics_proto3.tests.OneOfEnum.inner',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=1562,
-  serialized_end=1679,
+  serialized_start=1803,
+  serialized_end=1920,
 )
 
 _NESTED_INNER.containing_type = _NESTED
@@ -1034,6 +1137,16 @@ _WRAPPEDUINT32.fields_by_name['wrapped'].message_type = google_dot_protobuf_dot_
 _WRAPPEDBOOL.fields_by_name['wrapped'].message_type = google_dot_protobuf_dot_wrappers__pb2._BOOLVALUE
 _WRAPPEDSTRING.fields_by_name['wrapped'].message_type = google_dot_protobuf_dot_wrappers__pb2._STRINGVALUE
 _WRAPPEDBYTES.fields_by_name['wrapped'].message_type = google_dot_protobuf_dot_wrappers__pb2._BYTESVALUE
+_TIMESTAMP.fields_by_name['value'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
+_REPEATEDTIMESTAMP.fields_by_name['value'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
+_ONEOFTIMESTAMP.fields_by_name['value1'].message_type = google_dot_protobuf_dot_wrappers__pb2._STRINGVALUE
+_ONEOFTIMESTAMP.fields_by_name['value2'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
+_ONEOFTIMESTAMP.oneofs_by_name['inner'].fields.append(
+  _ONEOFTIMESTAMP.fields_by_name['value1'])
+_ONEOFTIMESTAMP.fields_by_name['value1'].containing_oneof = _ONEOFTIMESTAMP.oneofs_by_name['inner']
+_ONEOFTIMESTAMP.oneofs_by_name['inner'].fields.append(
+  _ONEOFTIMESTAMP.fields_by_name['value2'])
+_ONEOFTIMESTAMP.fields_by_name['value2'].containing_oneof = _ONEOFTIMESTAMP.oneofs_by_name['inner']
 _REPEATEDNESTED_INNER.containing_type = _REPEATEDNESTED
 _REPEATEDNESTED.fields_by_name['inner'].message_type = _REPEATEDNESTED_INNER
 _REPEATEDWRAPPED.fields_by_name['value'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT32VALUE
@@ -1072,6 +1185,9 @@ DESCRIPTOR.message_types_by_name['WrappedUInt32'] = _WRAPPEDUINT32
 DESCRIPTOR.message_types_by_name['WrappedBool'] = _WRAPPEDBOOL
 DESCRIPTOR.message_types_by_name['WrappedString'] = _WRAPPEDSTRING
 DESCRIPTOR.message_types_by_name['WrappedBytes'] = _WRAPPEDBYTES
+DESCRIPTOR.message_types_by_name['Timestamp'] = _TIMESTAMP
+DESCRIPTOR.message_types_by_name['RepeatedTimestamp'] = _REPEATEDTIMESTAMP
+DESCRIPTOR.message_types_by_name['OneOfTimestamp'] = _ONEOFTIMESTAMP
 DESCRIPTOR.message_types_by_name['Double'] = _DOUBLE
 DESCRIPTOR.message_types_by_name['Float'] = _FLOAT
 DESCRIPTOR.message_types_by_name['Int64'] = _INT64
@@ -1169,6 +1285,27 @@ WrappedBytes = _reflection.GeneratedProtocolMessageType('WrappedBytes', (_messag
   # @@protoc_insertion_point(class_scope:schematics_proto3.tests.WrappedBytes)
   ))
 _sym_db.RegisterMessage(WrappedBytes)
+
+Timestamp = _reflection.GeneratedProtocolMessageType('Timestamp', (_message.Message,), dict(
+  DESCRIPTOR = _TIMESTAMP,
+  __module__ = 'tests.schematics_proto3_tests_pb2'
+  # @@protoc_insertion_point(class_scope:schematics_proto3.tests.Timestamp)
+  ))
+_sym_db.RegisterMessage(Timestamp)
+
+RepeatedTimestamp = _reflection.GeneratedProtocolMessageType('RepeatedTimestamp', (_message.Message,), dict(
+  DESCRIPTOR = _REPEATEDTIMESTAMP,
+  __module__ = 'tests.schematics_proto3_tests_pb2'
+  # @@protoc_insertion_point(class_scope:schematics_proto3.tests.RepeatedTimestamp)
+  ))
+_sym_db.RegisterMessage(RepeatedTimestamp)
+
+OneOfTimestamp = _reflection.GeneratedProtocolMessageType('OneOfTimestamp', (_message.Message,), dict(
+  DESCRIPTOR = _ONEOFTIMESTAMP,
+  __module__ = 'tests.schematics_proto3_tests_pb2'
+  # @@protoc_insertion_point(class_scope:schematics_proto3.tests.OneOfTimestamp)
+  ))
+_sym_db.RegisterMessage(OneOfTimestamp)
 
 Double = _reflection.GeneratedProtocolMessageType('Double', (_message.Message,), dict(
   DESCRIPTOR = _DOUBLE,

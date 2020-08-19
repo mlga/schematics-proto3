@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import os
 import random
+from datetime import datetime, timedelta, timezone
 
 from google.protobuf import wrappers_pb2
 from schematics.exceptions import ValidationError
@@ -10,7 +11,7 @@ from schematics_proto3.types.base import ProtobufTypeMixin
 from schematics_proto3.unset import Unset
 
 __all__ = ['IntWrapperType', 'FloatWrapperType', 'BoolWrapperType',
-           'StringWrapperType', 'BytesWrapperType']
+           'StringWrapperType', 'BytesWrapperType', 'TimestampType']
 
 
 WRAPPER_TYPES = (
@@ -101,3 +102,28 @@ class BytesWrapperType(WrapperTypeMixin, BaseType):
             self.max_length if self.max_length is None else 256,
         )
         return os.urandom(length)
+
+
+class TimestampType(ProtobufTypeMixin, BaseType):
+
+    def convert_protobuf(self, msg, field_name, field_names):
+        # pylint: disable=no-self-use
+        if field_name not in field_names:
+            return Unset
+
+        value = getattr(msg, field_name)
+
+        return value
+
+    def to_native(self, value, context=None):
+        if isinstance(value, datetime):
+            return value
+
+        try:
+            return (
+                datetime(1970, 1, 1, tzinfo=timezone.utc)
+                + timedelta(seconds=value.seconds, microseconds=value.nanos // 1000)
+            )
+        except (ValueError, TypeError):
+            # TODO: Informative error or Unset?
+            return None
